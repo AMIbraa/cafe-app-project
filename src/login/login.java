@@ -4,10 +4,24 @@
  */
 package login;
 
-/**
- *
- * @author CIAGamester
- */
+import PanelRound.PanelRound;
+import home.home;
+
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.geom.Area;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import java.sql.ResultSet;
+
 public class login extends javax.swing.JFrame {
 
     /**
@@ -26,21 +40,183 @@ public class login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        emailAdd = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        logbtn = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        regbtn = new javax.swing.JLabel();
+        pword = new javax.swing.JPasswordField();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setBackground(new java.awt.Color(111, 72, 41));
+        jPanel1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jPanel1.setPreferredSize(new java.awt.Dimension(503, 578));
+
+        jLabel1.setFont(new java.awt.Font("Poppins Black", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("LOGIN");
+
+        jLabel2.setFont(new java.awt.Font("Poppins", 0, 20)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Email");
+
+        emailAdd.setFont(new java.awt.Font("Poppins", 0, 20)); // NOI18N
+        emailAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emailAddActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Poppins", 0, 20)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Password");
+
+        logbtn.setBackground(new java.awt.Color(219, 167, 57));
+        logbtn.setFont(new java.awt.Font("Poppins Medium", 0, 24)); // NOI18N
+        logbtn.setForeground(new java.awt.Color(0, 51, 51));
+        logbtn.setText("Login");
+        logbtn.setPreferredSize(new java.awt.Dimension(192, 54));
+        logbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logbtnActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Belum punya akun?");
+
+        regbtn.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
+        regbtn.setForeground(new java.awt.Color(219, 167, 57));
+        regbtn.setText("Register");
+        regbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                regbtnMouseClicked(evt);
+            }
+        });
+
+        pword.setFont(new java.awt.Font("Poppins", 0, 20)); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(191, 191, 191))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(pword, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
+                                .addComponent(emailAdd))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(148, 148, 148)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(logbtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(regbtn)))))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(71, 71, 71)
+                .addComponent(jLabel1)
+                .addGap(43, 43, 43)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(emailAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pword, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56)
+                .addComponent(logbtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(regbtn))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void emailAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailAddActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_emailAddActionPerformed
+
+    private void regbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_regbtnMouseClicked
+        // TODO add your handling code here:
+        signUp sign = new signUp();
+        sign.setVisible(true);
+        sign.pack();
+        sign.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_regbtnMouseClicked
+
+    private void logbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logbtnActionPerformed
+        // TODO add your handling code here:
+        String email, password, query, passdb = null;
+        String SUrl, SUser, SPass;
+        SUrl = "jdbc:Mysql://localhost:3306/cafe";
+        SUser = "root";
+        SPass = "";
+        int notFound = 0;
+        
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(SUrl, SUser, SPass);
+            Statement stat = conn.createStatement();
+            if("".equals(emailAdd.getText())){
+                JOptionPane.showMessageDialog(new JFrame(), "Email is require", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if("".equals(pword.getText())){
+                JOptionPane.showMessageDialog(new JFrame(), "Password is require", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                email = emailAdd.getName();
+                password = pword.getText();
+                
+                query = "SELECT * FROM userlog WHERE email= '" + email + "'";
+                
+                ResultSet rs = stat.executeQuery(query);
+                while(rs.next()){
+                    passdb = rs.getString("password");
+                    notFound = 1;
+                }
+                
+                if(notFound == 1 && password.equals(passdb)){
+                    home HomeFrame = new home();
+                    HomeFrame.setVisible(true);
+                    HomeFrame.pack();
+                    HomeFrame.setLocationRelativeTo(null);
+                    this.dispose();
+                }else{
+                    JOptionPane.showMessageDialog(new JFrame(), "Incorrect email or password", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                
+                pword.setText("");
+            }
+        }catch(Exception e){
+            System.out.println("Error!" + e.getMessage());
+        }
+    }//GEN-LAST:event_logbtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +254,124 @@ public class login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField emailAdd;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton logbtn;
+    private javax.swing.JPasswordField pword;
+    private javax.swing.JLabel regbtn;
     // End of variables declaration//GEN-END:variables
+
+  public class PanelRound extends JPanel {
+
+    /**
+     * @return the roundTopLeft
+     */
+    public int getRoundTopLeft() {
+        return roundTopLeft;
+    }
+
+    /**
+     * @param roundTopLeft the roundTopLeft to set
+     */
+    public void setRoundTopLeft(int roundTopLeft) {
+        this.roundTopLeft = roundTopLeft;
+        repaint();
+
+    }
+
+    /**
+     * @return the roundTopRight
+     */
+    public int getRoundTopRight() {
+        return roundTopRight;
+    }
+
+    /**
+     * @param roundTopRight the roundTopRight to set
+     */
+    public void setRoundTopRight(int roundTopRight) {
+        this.roundTopRight = roundTopRight;        
+        repaint();
+
+    }
+
+    /**
+     * @return the roundBottomLeft
+     */
+    public int getRoundBottomLeft() {
+        return roundBottomLeft;
+    }
+
+    /**
+     * @param roundBottomLeft the roundBottomLeft to set
+     */
+    public void setRoundBottomLeft(int roundBottomLeft) {
+        this.roundBottomLeft = roundBottomLeft;
+        repaint();
+    }
+
+    /**
+     * @return the roundBottomRight
+     */
+    public int getRoundBottomRight() {
+        return roundBottomRight;
+    }
+
+    /**
+     * @param roundBottomRight the roundBottomRight to set
+     */
+    public void setRoundBottomRight(int roundBottomRight) {
+        this.roundBottomRight = roundBottomRight;
+        repaint();
+    }
+    
+    private int roundTopLeft=0;
+    private int roundTopRight=0;
+    private int roundBottomLeft=0;
+    private int roundBottomRight=0;
+    
+    public PanelRound(){
+        setOpaque(false);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setColor(getBackground());
+        Area area = new Area(createRoundTopLeft());
+        if(roundTopRight > 0){
+            area.intersect(new Area(createRoundTopRight()));
+        }
+        g2.fill(area);
+        g2.dispose();
+        super.paintComponent(g);
+    }
+    
+    private Shape createRoundTopLeft(){
+        int width = getWidth();
+        int height = getHeight();
+        int roundX = Math.min(width, roundTopLeft);
+        int roundY = Math.min(height, roundTopLeft);
+        Area area = new Area(new RoundRectangle2D.Double(0, 0, width, height, roundX, roundY));
+        area.add(new Area(new Rectangle2D.Double(roundX, 0, width - roundX / 2, height)));
+        area.add(new Area(new Rectangle2D.Double(0, roundY / 2, width, height - roundY / 2)));
+        return area;
+    }
+    
+    private Shape createRoundTopRight(){
+        int width = getWidth();
+        int height = getHeight();
+        int roundX = Math.min(width, roundTopRight);
+        int roundY = Math.min(height, roundTopRight);
+        Area area = new Area(new RoundRectangle2D.Double(0, 0, width, height, roundX, roundY));
+        area.add(new Area(new Rectangle2D.Double(0, 0, width - roundX / 2, height)));
+        area.add(new Area(new Rectangle2D.Double(0, roundY / 2, width, height - roundY / 2)));
+        return area;
+    }
+  }
 }
