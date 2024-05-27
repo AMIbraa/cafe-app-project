@@ -26,32 +26,43 @@ public class signUp extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        panelRound2 = new PanelRound.PanelRound();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         fullname = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        signbtn = new javax.swing.JButton();
-        pword = new javax.swing.JPasswordField();
-        emailAdd = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        regbtn = new javax.swing.JLabel();
+        emailAdd = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        pword = new javax.swing.JPasswordField();
+        signbtn = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
+        regbtn = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(111, 72, 41));
-        jPanel1.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jPanel1.setPreferredSize(new java.awt.Dimension(503, 578));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setPreferredSize(new java.awt.Dimension(1194, 834));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelRound2.setBackground(new java.awt.Color(111, 72, 41));
+        panelRound2.setPreferredSize(new java.awt.Dimension(503, 578));
+        panelRound2.setRoundBottomLeft(60);
+        panelRound2.setRoundBottomRight(60);
+        panelRound2.setRoundTopLeft(60);
+        panelRound2.setRoundTopRight(60);
+        panelRound2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Poppins Black", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("REGISTER");
+        panelRound2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Poppins", 0, 20)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Fullname");
+        panelRound2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, -1, -1));
 
         fullname.setFont(new java.awt.Font("Poppins", 0, 20)); // NOI18N
         fullname.addActionListener(new java.awt.event.ActionListener() {
@@ -59,23 +70,12 @@ public class signUp extends javax.swing.JFrame {
                 fullnameActionPerformed(evt);
             }
         });
+        panelRound2.add(fullname, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 417, 54));
 
-        jLabel3.setFont(new java.awt.Font("Poppins", 0, 20)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Password");
-
-        signbtn.setBackground(new java.awt.Color(219, 167, 57));
-        signbtn.setFont(new java.awt.Font("Poppins Medium", 0, 24)); // NOI18N
-        signbtn.setForeground(new java.awt.Color(0, 51, 51));
-        signbtn.setText("Sign Up");
-        signbtn.setPreferredSize(new java.awt.Dimension(192, 54));
-        signbtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                signbtnActionPerformed(evt);
-            }
-        });
-
-        pword.setFont(new java.awt.Font("Poppins", 0, 20)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Poppins", 0, 20)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Email");
+        panelRound2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, -1, -1));
 
         emailAdd.setFont(new java.awt.Font("Poppins", 0, 20)); // NOI18N
         emailAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -83,10 +83,33 @@ public class signUp extends javax.swing.JFrame {
                 emailAddActionPerformed(evt);
             }
         });
+        panelRound2.add(emailAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, 417, 54));
 
-        jLabel4.setFont(new java.awt.Font("Poppins", 0, 20)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Email");
+        jLabel3.setFont(new java.awt.Font("Poppins", 0, 20)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Password");
+        panelRound2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 320, -1, -1));
+
+        pword.setFont(new java.awt.Font("Poppins", 0, 20)); // NOI18N
+        panelRound2.add(pword, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, 417, 54));
+
+        signbtn.setBackground(new java.awt.Color(219, 167, 57));
+        signbtn.setFont(new java.awt.Font("Poppins Medium", 0, 24)); // NOI18N
+        signbtn.setForeground(new java.awt.Color(255, 255, 255));
+        signbtn.setText("Sign Up");
+        signbtn.setBorderPainted(false);
+        signbtn.setPreferredSize(new java.awt.Dimension(192, 54));
+        signbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signbtnActionPerformed(evt);
+            }
+        });
+        panelRound2.add(signbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 450, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Sudah punya akun?");
+        panelRound2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 510, 120, 20));
 
         regbtn.setFont(new java.awt.Font("Poppins", 0, 13)); // NOI18N
         regbtn.setForeground(new java.awt.Color(219, 167, 57));
@@ -96,67 +119,11 @@ public class signUp extends javax.swing.JFrame {
                 regbtnMouseClicked(evt);
             }
         });
+        panelRound2.add(regbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 510, -1, -1));
 
-        jLabel5.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Sudah punya akun?");
+        jPanel2.add(panelRound2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 140, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(pword)
-                                .addComponent(emailAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel4)
-                            .addComponent(fullname, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addComponent(signbtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(166, 166, 166)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(regbtn)))
-                .addContainerGap(46, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fullname, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(emailAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pword, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(signbtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(regbtn))
-                .addContainerGap(60, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
         setLocationRelativeTo(null);
@@ -257,7 +224,8 @@ public class signUp extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private PanelRound.PanelRound panelRound2;
     private javax.swing.JPasswordField pword;
     private javax.swing.JLabel regbtn;
     private javax.swing.JButton signbtn;
