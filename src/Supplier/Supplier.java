@@ -4,19 +4,106 @@
  */
 package Supplier;
 
+import connection.newConnection;
+
+import home.home;
+import menu.menu;
+import laporan.Laporan;
+import inventaris.inventaris;
+import karyawan.absenKaryawan;
+import login.logout;
+import pelanggan.pelanggan;
+
+import java.sql.*;
+import java.awt.Color;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
- * @author Ridho Kurniawan
+ * @author CIAGamester
  */
 public class Supplier extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Supplier
-     */
+    public Connection conn = new newConnection().connect();
+    private DefaultTableModel tabmode;
+    
+    
     public Supplier() {
         initComponents();
+        datatable();
+        autoNumberID();
+    }
+    
+    private void aktif(){
+        idsup.setEnabled(true);
+        sup.setEnabled(true);
+        kdmenu.setEnabled(true);
+        nmenu.setEnabled(true);
+        jmlh.setEnabled(true);
+        hrg.setEnabled(true);
+        notelp.setEnabled(true);
+        tanggaltransaksi.setEnabled(true);
+        idsup.requestFocus();
+    }
+    
+    private void kosong(){
+        idsup.setText("");
+        sup.setText("");
+        kdmenu.setText("");
+        nmenu.setText("");
+        jmlh.setText("");
+        hrg.setText("");
+        notelp.setText("");
+        tanggaltransaksi.setText("");
     }
 
+    private void datatable(){
+        Object[] Baris = {"ID Supplier", "Supplier", "Kode Menu", "Nama Menu", "Jumlah", "Harga", "No.Telp", "Tanggal."};
+        tabmode = new DefaultTableModel(null, Baris);
+        tabelsup.setModel(tabmode);
+        String sql = "SELECT * FROM supplier";
+        try {
+            java.sql.Statement stat = conn.createStatement();
+            ResultSet rs = stat.executeQuery(sql);
+            while(rs.next()){
+                String a = rs.getString("id_supplier");
+                String b = rs.getString("supplier");
+                String c = rs.getString("kode_menu");
+                String d = rs.getString("nama_menu");
+                String e = rs.getString("jumlah");
+                String f = rs.getString("harga_beli");
+                String g = rs.getString("no_telp");
+                String h = rs.getString("tanggal");
+
+                String[] data = {a,b,c,d,e,f,g,h};
+                tabmode.addRow(data);
+            }
+        } catch(Exception e) {
+            System.err.println("DB Error!" + e.getMessage());
+        }
+    }
+    
+    private void autoNumberID(){
+        String idSup = "SUP000";
+        int i = 0;
+        try{
+            String sql = "SELECT id_supplier FROM supplier";
+            PreparedStatement stat = conn.prepareStatement(sql);
+            ResultSet rs = stat.executeQuery();
+            while(rs.next()){
+                idSup = rs.getString("id_supplier");
+            }
+            idSup = idSup.substring(3);
+            i = Integer.parseInt(idSup) + 1;
+            idSup = "00" + i;
+            idSup= "SUP" + idSup.substring(idSup.length()-3);
+            idsup.setText(idSup);
+        } catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Penomoran otomatis gagal! " + e);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,21 +113,859 @@ public class Supplier extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dateChooser = new com.raven.datechooser.DateChooser();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jPanel23 = new javax.swing.JPanel();
+        jSeparator2 = new javax.swing.JSeparator();
+        userdd = new javax.swing.JPanel();
+        userbar2 = new javax.swing.JLabel();
+        homebar = new javax.swing.JLabel();
+        stokbar = new javax.swing.JLabel();
+        orderbar = new javax.swing.JLabel();
+        mejabar = new javax.swing.JLabel();
+        laporanbar = new javax.swing.JLabel();
+        supplierbar = new javax.swing.JLabel();
+        karyawanbar = new javax.swing.JLabel();
+        userbar = new javax.swing.JLabel();
+        panelRound1 = new PanelRound.PanelRound();
+        panelRound2 = new PanelRound.PanelRound();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        searchlabel = new javax.swing.JTextField();
+        caribtn = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tabelsup = new jtable_custom.JTable_Custom();
+        panelRound3 = new PanelRound.PanelRound();
+        panelRound4 = new PanelRound.PanelRound();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        kdmenu = new javax.swing.JTextField();
+        sup = new javax.swing.JTextField();
+        nama5 = new javax.swing.JLabel();
+        nama6 = new javax.swing.JLabel();
+        nama7 = new javax.swing.JLabel();
+        hrg = new javax.swing.JTextField();
+        nama8 = new javax.swing.JLabel();
+        idsup = new javax.swing.JTextField();
+        nama9 = new javax.swing.JLabel();
+        notelp = new javax.swing.JTextField();
+        nama10 = new javax.swing.JLabel();
+        nama11 = new javax.swing.JLabel();
+        inputbtn = new javax.swing.JButton();
+        hapusbtn = new javax.swing.JButton();
+        editbtn = new javax.swing.JButton();
+        nmenu = new javax.swing.JTextField();
+        jmlh = new javax.swing.JTextField();
+        nama12 = new javax.swing.JLabel();
+        datebtn = new javax.swing.JButton();
+        tanggaltransaksi = new javax.swing.JTextField();
+
+        dateChooser.setForeground(new java.awt.Color(111, 72, 41));
+        dateChooser.setDateFormat("yyyy-MM-dd");
+        dateChooser.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
+        dateChooser.setTextRefernce(tanggaltransaksi);
+        dateChooser.getAccessibleContext().setAccessibleName("...");
+        dateChooser.getAccessibleContext().setAccessibleParent(datebtn);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jScrollPane2.setPreferredSize(new java.awt.Dimension(1269, 1473));
+
+        jPanel23.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel23.setPreferredSize(new java.awt.Dimension(1433, 1473));
+
+        jSeparator2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jSeparator2.setPreferredSize(new java.awt.Dimension(50, 15));
+
+        userdd.setBackground(new java.awt.Color(255, 255, 255));
+        userdd.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        userbar2.setFont(new java.awt.Font("Poppins", 0, 16)); // NOI18N
+        userbar2.setText("Logout");
+        userbar2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                userbar2MouseClicked(evt);
+            }
+        });
+        userdd.add(userbar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        homebar.setFont(new java.awt.Font("Poppins", 1, 16)); // NOI18N
+        homebar.setText("Home");
+        homebar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                homebarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                homebarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                homebarMouseExited(evt);
+            }
+        });
+
+        stokbar.setFont(new java.awt.Font("Poppins", 1, 16)); // NOI18N
+        stokbar.setText("Stok");
+        stokbar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                stokbarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                stokbarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                stokbarMouseExited(evt);
+            }
+        });
+
+        orderbar.setFont(new java.awt.Font("Poppins", 1, 16)); // NOI18N
+        orderbar.setText("Order");
+        orderbar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                orderbarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                orderbarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                orderbarMouseExited(evt);
+            }
+        });
+
+        mejabar.setFont(new java.awt.Font("Poppins", 1, 16)); // NOI18N
+        mejabar.setText("Pelanggan");
+        mejabar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mejabarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                mejabarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                mejabarMouseExited(evt);
+            }
+        });
+
+        laporanbar.setFont(new java.awt.Font("Poppins", 1, 16)); // NOI18N
+        laporanbar.setText("Laporan");
+        laporanbar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                laporanbarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                laporanbarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                laporanbarMouseExited(evt);
+            }
+        });
+
+        supplierbar.setFont(new java.awt.Font("Poppins", 1, 16)); // NOI18N
+        supplierbar.setText("Supplier");
+        supplierbar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                supplierbarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                supplierbarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                supplierbarMouseExited(evt);
+            }
+        });
+
+        karyawanbar.setFont(new java.awt.Font("Poppins", 1, 16)); // NOI18N
+        karyawanbar.setText("Karyawan");
+        karyawanbar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                karyawanbarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                karyawanbarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                karyawanbarMouseExited(evt);
+            }
+        });
+
+        userbar.setFont(new java.awt.Font("Poppins", 1, 16)); // NOI18N
+        userbar.setText("Owner");
+        userbar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                userbarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                userbarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                userbarMouseExited(evt);
+            }
+        });
+
+        panelRound1.setBackground(new java.awt.Color(206, 194, 182));
+        panelRound1.setRoundBottomLeft(30);
+        panelRound1.setRoundBottomRight(30);
+        panelRound1.setRoundTopLeft(30);
+        panelRound1.setRoundTopRight(30);
+
+        panelRound2.setBackground(new java.awt.Color(111, 72, 41));
+        panelRound2.setRoundTopLeft(30);
+        panelRound2.setRoundTopRight(30);
+
+        jLabel4.setFont(new java.awt.Font("Poppins", 1, 16)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Data Supplier");
+
+        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Data_Backup_optimized.png"))); // NOI18N
+
+        javax.swing.GroupLayout panelRound2Layout = new javax.swing.GroupLayout(panelRound2);
+        panelRound2.setLayout(panelRound2Layout);
+        panelRound2Layout.setHorizontalGroup(
+            panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound2Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelRound2Layout.setVerticalGroup(
+            panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRound2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel4)))
+                .addContainerGap())
+        );
+
+        searchlabel.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        searchlabel.setForeground(new java.awt.Color(204, 204, 204));
+        searchlabel.setText("Masukkan Data Supplier");
+        searchlabel.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                searchlabelFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                searchlabelFocusLost(evt);
+            }
+        });
+        searchlabel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchlabelActionPerformed(evt);
+            }
+        });
+
+        caribtn.setBackground(new java.awt.Color(219, 167, 57));
+        caribtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        caribtn.setForeground(new java.awt.Color(255, 255, 255));
+        caribtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Search_optimized.png"))); // NOI18N
+        caribtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                caribtnActionPerformed(evt);
+            }
+        });
+
+        tabelsup.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID Supplier", "Supplier", "Kode Menu", "Nama Menu", "Jumlah", "Harga", "No. Telp", "Tanggal"
+            }
+        ));
+        tabelsup.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelsupMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tabelsup);
+
+        javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
+        panelRound1.setLayout(panelRound1Layout);
+        panelRound1Layout.setHorizontalGroup(
+            panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(panelRound2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panelRound1Layout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1063, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelRound1Layout.createSequentialGroup()
+                        .addGap(570, 570, 570)
+                        .addComponent(searchlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(caribtn, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(36, Short.MAX_VALUE))
+        );
+        panelRound1Layout.setVerticalGroup(
+            panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound1Layout.createSequentialGroup()
+                .addComponent(panelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(searchlabel, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(caribtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+
+        panelRound3.setBackground(new java.awt.Color(206, 194, 182));
+        panelRound3.setPreferredSize(new java.awt.Dimension(1140, 700));
+        panelRound3.setRoundBottomLeft(30);
+        panelRound3.setRoundBottomRight(30);
+        panelRound3.setRoundTopLeft(30);
+        panelRound3.setRoundTopRight(30);
+        panelRound3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelRound4.setBackground(new java.awt.Color(111, 72, 41));
+        panelRound4.setPreferredSize(new java.awt.Dimension(1140, 38));
+        panelRound4.setRoundTopLeft(30);
+        panelRound4.setRoundTopRight(30);
+        panelRound4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel9.setFont(new java.awt.Font("Poppins", 1, 16)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Tambah Data Supplier");
+        panelRound4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, -1, 40));
+
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Insert_Table_optimized.png"))); // NOI18N
+        panelRound4.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 30, 40));
+
+        panelRound3.add(panelRound4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1140, -1));
+
+        kdmenu.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        kdmenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kdmenuActionPerformed(evt);
+            }
+        });
+        panelRound3.add(kdmenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 450, 30));
+
+        sup.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        sup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supActionPerformed(evt);
+            }
+        });
+        panelRound3.add(sup, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 450, 30));
+
+        nama5.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        nama5.setForeground(new java.awt.Color(255, 255, 255));
+        nama5.setText("Supplier");
+        panelRound3.add(nama5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, -1, -1));
+
+        nama6.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        nama6.setForeground(new java.awt.Color(255, 255, 255));
+        nama6.setText("Kode Menu");
+        panelRound3.add(nama6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, -1, -1));
+
+        nama7.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        nama7.setForeground(new java.awt.Color(255, 255, 255));
+        nama7.setText("Nama Menu");
+        panelRound3.add(nama7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, -1, -1));
+
+        hrg.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        hrg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hrgActionPerformed(evt);
+            }
+        });
+        panelRound3.add(hrg, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 170, 450, 30));
+
+        nama8.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        nama8.setForeground(new java.awt.Color(255, 255, 255));
+        nama8.setText("Harga");
+        panelRound3.add(nama8, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 140, -1, -1));
+
+        idsup.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        idsup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idsupActionPerformed(evt);
+            }
+        });
+        panelRound3.add(idsup, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 450, 30));
+
+        nama9.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        nama9.setForeground(new java.awt.Color(255, 255, 255));
+        nama9.setText("ID Supplier");
+        panelRound3.add(nama9, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, -1, -1));
+
+        notelp.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        notelp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                notelpActionPerformed(evt);
+            }
+        });
+        panelRound3.add(notelp, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 250, 450, 30));
+
+        nama10.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        nama10.setForeground(new java.awt.Color(255, 255, 255));
+        nama10.setText("No.Telp");
+        panelRound3.add(nama10, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 220, -1, -1));
+
+        nama11.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        nama11.setForeground(new java.awt.Color(255, 255, 255));
+        nama11.setText("Tanggal");
+        panelRound3.add(nama11, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 300, -1, -1));
+
+        inputbtn.setBackground(new java.awt.Color(219, 167, 57));
+        inputbtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        inputbtn.setForeground(new java.awt.Color(255, 255, 255));
+        inputbtn.setText("Tambah");
+        inputbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputbtnActionPerformed(evt);
+            }
+        });
+        panelRound3.add(inputbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, 450, 40));
+
+        hapusbtn.setBackground(new java.awt.Color(111, 72, 41));
+        hapusbtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        hapusbtn.setForeground(new java.awt.Color(255, 255, 255));
+        hapusbtn.setText("Hapus");
+        hapusbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hapusbtnActionPerformed(evt);
+            }
+        });
+        panelRound3.add(hapusbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 390, 210, 40));
+
+        editbtn.setBackground(new java.awt.Color(111, 72, 41));
+        editbtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        editbtn.setForeground(new java.awt.Color(255, 255, 255));
+        editbtn.setText("Ubah");
+        editbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editbtnActionPerformed(evt);
+            }
+        });
+        panelRound3.add(editbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 390, 210, 40));
+
+        nmenu.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        nmenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nmenuActionPerformed(evt);
+            }
+        });
+        panelRound3.add(nmenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 330, 450, 30));
+
+        jmlh.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        jmlh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmlhActionPerformed(evt);
+            }
+        });
+        panelRound3.add(jmlh, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 90, 450, 30));
+
+        nama12.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        nama12.setForeground(new java.awt.Color(255, 255, 255));
+        nama12.setText("Jumlah");
+        panelRound3.add(nama12, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 60, -1, -1));
+
+        datebtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Calendar_4_optimized.png"))); // NOI18N
+        datebtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                datebtnActionPerformed(evt);
+            }
+        });
+        panelRound3.add(datebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 330, 50, 30));
+
+        tanggaltransaksi.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        tanggaltransaksi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tanggaltransaksiActionPerformed(evt);
+            }
+        });
+        panelRound3.add(tanggaltransaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 330, 310, 30));
+
+        javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
+        jPanel23.setLayout(jPanel23Layout);
+        jPanel23Layout.setHorizontalGroup(
+            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel23Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelRound3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel23Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(homebar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(stokbar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(orderbar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(mejabar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(laporanbar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(supplierbar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(karyawanbar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 403, Short.MAX_VALUE)
+                .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(userbar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(userdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(332, 332, 332))
+            .addGroup(jPanel23Layout.createSequentialGroup()
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 1222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel23Layout.setVerticalGroup(
+            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel23Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(homebar)
+                    .addComponent(stokbar)
+                    .addComponent(orderbar)
+                    .addComponent(mejabar)
+                    .addComponent(laporanbar)
+                    .addComponent(supplierbar)
+                    .addComponent(karyawanbar)
+                    .addGroup(jPanel23Layout.createSequentialGroup()
+                        .addComponent(userbar)
+                        .addGap(5, 5, 5)
+                        .addComponent(userdd, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(8, 8, 8)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelRound3, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jScrollPane2.setViewportView(jPanel23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1260, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void userbar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userbar2MouseClicked
+        // TODO add your handling code here:
+        logout Logout = new logout();
+        Logout.setVisible(true);
+        Logout.pack();
+        Logout.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_userbar2MouseClicked
+
+    private void homebarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homebarMouseClicked
+        home Home = new home();
+        Home.setVisible(true);
+        Home.pack();
+        Home.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_homebarMouseClicked
+
+    private void homebarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homebarMouseEntered
+        homebar.setForeground(new Color(206,194,182));
+    }//GEN-LAST:event_homebarMouseEntered
+
+    private void homebarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homebarMouseExited
+        homebar.setForeground(new Color(0,0,0));
+    }//GEN-LAST:event_homebarMouseExited
+
+    private void stokbarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stokbarMouseClicked
+        inventaris stoks = new inventaris();
+        stoks.setVisible(true);
+        stoks.pack();
+        stoks.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_stokbarMouseClicked
+
+    private void stokbarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stokbarMouseEntered
+        stokbar.setForeground(new Color(206,194,182));
+    }//GEN-LAST:event_stokbarMouseEntered
+
+    private void stokbarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stokbarMouseExited
+        stokbar.setForeground(new Color(0,0,0));
+    }//GEN-LAST:event_stokbarMouseExited
+
+    private void orderbarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderbarMouseClicked
+        menu or = new menu();
+        or.setVisible(true);
+        or.pack();
+        or.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_orderbarMouseClicked
+
+    private void orderbarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderbarMouseEntered
+        orderbar.setForeground(new Color(206,194,182));
+    }//GEN-LAST:event_orderbarMouseEntered
+
+    private void orderbarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderbarMouseExited
+        orderbar.setForeground(new Color(0,0,0));
+    }//GEN-LAST:event_orderbarMouseExited
+
+    private void mejabarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mejabarMouseClicked
+        pelanggan Meja = new pelanggan();
+        Meja.setVisible(true);
+        Meja.pack();
+        Meja.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_mejabarMouseClicked
+
+    private void mejabarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mejabarMouseEntered
+        mejabar.setForeground(new Color(206,194,182));
+    }//GEN-LAST:event_mejabarMouseEntered
+
+    private void mejabarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mejabarMouseExited
+        mejabar.setForeground(new Color(0,0,0));
+    }//GEN-LAST:event_mejabarMouseExited
+
+    private void laporanbarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laporanbarMouseClicked
+        Laporan lap = new Laporan();
+        lap.setVisible(true);
+        lap.pack();
+        lap.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_laporanbarMouseClicked
+
+    private void laporanbarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laporanbarMouseEntered
+        laporanbar.setForeground(new Color(206,194,182));
+    }//GEN-LAST:event_laporanbarMouseEntered
+
+    private void laporanbarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laporanbarMouseExited
+        laporanbar.setForeground(new Color(0,0,0));
+    }//GEN-LAST:event_laporanbarMouseExited
+
+    private void supplierbarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_supplierbarMouseClicked
+        Supplier sup = new Supplier();
+        sup.setVisible(true);
+        sup.pack();
+        sup.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_supplierbarMouseClicked
+
+    private void supplierbarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_supplierbarMouseEntered
+        supplierbar.setForeground(new Color(206,194,182));
+    }//GEN-LAST:event_supplierbarMouseEntered
+
+    private void supplierbarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_supplierbarMouseExited
+        supplierbar.setForeground(new Color(0,0,0));
+    }//GEN-LAST:event_supplierbarMouseExited
+
+    private void karyawanbarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_karyawanbarMouseClicked
+        absenKaryawan Kar = new absenKaryawan();
+        Kar.setVisible(true);
+        Kar.pack();
+        Kar.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_karyawanbarMouseClicked
+
+    private void karyawanbarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_karyawanbarMouseEntered
+        karyawanbar.setForeground(new Color(206,194,182));
+    }//GEN-LAST:event_karyawanbarMouseEntered
+
+    private void karyawanbarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_karyawanbarMouseExited
+        karyawanbar.setForeground(new Color(0,0,0));
+    }//GEN-LAST:event_karyawanbarMouseExited
+
+    private void userbarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userbarMouseClicked
+        userdd.setSize(76, 40);
+    }//GEN-LAST:event_userbarMouseClicked
+
+    private void userbarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userbarMouseEntered
+        userbar.setForeground(new Color(206,194,182));
+    }//GEN-LAST:event_userbarMouseEntered
+
+    private void userbarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userbarMouseExited
+        userbar.setForeground(new Color(0,0,0));
+    }//GEN-LAST:event_userbarMouseExited
+
+    private void searchlabelFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchlabelFocusGained
+        if(searchlabel.getText().equals("Masukkan Data Supplier")){
+            searchlabel.setText("");
+            searchlabel.setForeground(new Color(0,0,0));
+        }
+    }//GEN-LAST:event_searchlabelFocusGained
+
+    private void searchlabelFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchlabelFocusLost
+        if(searchlabel.getText().equals("")){
+            searchlabel.setText("Masukkan Data Supplier");
+            searchlabel.setForeground(new Color(204,204,204));
+        }
+    }//GEN-LAST:event_searchlabelFocusLost
+
+    private void searchlabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchlabelActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchlabelActionPerformed
+
+    private void caribtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caribtnActionPerformed
+        Object[] Baris = {"ID Supplier", "Supplier", "Kode Menu", "Nama Menu", "Jumlah", "Harga", "No.Telp", "Tanggal"};
+        tabmode = new DefaultTableModel(null, Baris);
+        tabelsup.setModel(tabmode);
+        String sql = "SELECT * FROM supplier WHERE id_supplier OR supplier OR kode_menu OR nama_menu like '%" + searchlabel.getText() + "%'";
+        try {
+            java.sql.Statement stat = conn.createStatement();
+            ResultSet rs = stat.executeQuery(sql);
+            while(rs.next()){
+                String a = rs.getString("id_supplier");
+                String b = rs.getString("supplier");
+                String c = rs.getString("kode_menu");
+                String d = rs.getString("nama_menu");
+                String e = rs.getString("jumlah");
+                String f = rs.getString("harga_beli");
+                String g = rs.getString("no_telp");
+                String h = rs.getString("tanggal");
+
+                String[] data = {a,b,c,d,e,f,g,h};
+                tabmode.addRow(data);
+            }
+        } catch(Exception e) {
+            System.err.println("DB Error!" + e.getMessage());
+        }
+    }//GEN-LAST:event_caribtnActionPerformed
+
+    private void tabelsupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelsupMouseClicked
+        int bar = tabelsup.getSelectedRow();
+        String a = tabmode.getValueAt(bar, 0).toString();
+        String b = tabmode.getValueAt(bar, 1).toString();
+        String c = tabmode.getValueAt(bar, 2).toString();
+        String d = tabmode.getValueAt(bar, 3).toString();
+        String e = tabmode.getValueAt(bar, 4).toString();
+        String f = tabmode.getValueAt(bar, 5).toString();
+        String g = tabmode.getValueAt(bar, 6).toString();
+        String h = tabmode.getValueAt(bar, 7).toString();
+
+        idsup.setText(a);
+        sup.setText(b);
+        kdmenu.setText(c);
+        nmenu.setText(d);
+        jmlh.setText(e);
+        hrg.setText(f);
+        notelp.setText(g);
+        tanggaltransaksi.setText(h);
+    }//GEN-LAST:event_tabelsupMouseClicked
+
+    private void kdmenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kdmenuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_kdmenuActionPerformed
+
+    private void supActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_supActionPerformed
+
+    private void hrgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hrgActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_hrgActionPerformed
+
+    private void idsupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idsupActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idsupActionPerformed
+
+    private void notelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notelpActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_notelpActionPerformed
+
+    private void inputbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputbtnActionPerformed
+        String sql = "INSERT into supplier values (?,?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement stat = conn.prepareStatement(sql);
+            stat.setString(1, idsup.getText());
+            stat.setString(2, sup.getText());
+            stat.setString(3, kdmenu.getText());
+            stat.setString(4, nmenu.getText());
+            stat.setString(5, jmlh.getText());
+            stat.setString(6, hrg.getText());
+            stat.setString(7, notelp.getText());
+            stat.setString(8, tanggaltransaksi.getText());
+
+            stat.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Data saved successfully!");
+            kosong();
+            sup.requestFocus();
+            datatable();
+            autoNumberID();
+        } catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Data gagal diinput! " + e);
+        }
+    }//GEN-LAST:event_inputbtnActionPerformed
+
+    private void hapusbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusbtnActionPerformed
+        int ok = JOptionPane.showConfirmDialog(null, "delete", "Confirm Dialog", JOptionPane.YES_NO_CANCEL_OPTION);
+        if (ok == 0){
+            String sql = "delete from supplier where id_supplier ='"+idsup.getText()+"'";
+            try {
+                PreparedStatement stat = conn.prepareStatement(sql);
+                stat.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Data berhasil dihapus");
+                kosong();
+                idsup.requestFocus();
+                datatable();
+                autoNumberID();
+            } catch(SQLException e) {
+                JOptionPane.showMessageDialog(null, "Data failed to delete "+ e);
+            }
+        }
+    }//GEN-LAST:event_hapusbtnActionPerformed
+
+    private void editbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editbtnActionPerformed
+        try {
+            String sql = "update supplier set id_supplier=?,supplier=?,nama_menu=?,jumlah=?,harga_beli=?,no_telp=?,tanggal=? where kode_menu =?";
+            PreparedStatement stat = conn.prepareStatement(sql);
+            stat.setString(1, idsup.getText());
+            stat.setString(2, sup.getText());
+            stat.setString(3, kdmenu.getText());
+            stat.setString(4, nmenu.getText());
+            stat.setString(5, jmlh.getText());
+            stat.setString(6, hrg.getText());
+            stat.setString(7, notelp.getText());
+            stat.setString(8, tanggaltransaksi.getText());
+
+            stat.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Data berhasil diedit!");
+            kosong();
+            sup.requestFocus();
+            datatable();
+            autoNumberID();
+        } catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Data failed to edit!" + e);
+        }
+    }//GEN-LAST:event_editbtnActionPerformed
+
+    private void nmenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nmenuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nmenuActionPerformed
+
+    private void jmlhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmlhActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmlhActionPerformed
+
+    private void datebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_datebtnActionPerformed
+        dateChooser.showPopup();
+    }//GEN-LAST:event_datebtnActionPerformed
+
+    private void tanggaltransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tanggaltransaksiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tanggaltransaksiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +1003,51 @@ public class Supplier extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton caribtn;
+    private com.raven.datechooser.DateChooser dateChooser;
+    private javax.swing.JButton datebtn;
+    private javax.swing.JButton editbtn;
+    private javax.swing.JButton hapusbtn;
+    private javax.swing.JLabel homebar;
+    private javax.swing.JTextField hrg;
+    private javax.swing.JTextField idsup;
+    private javax.swing.JButton inputbtn;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel23;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JTextField jmlh;
+    private javax.swing.JLabel karyawanbar;
+    private javax.swing.JTextField kdmenu;
+    private javax.swing.JLabel laporanbar;
+    private javax.swing.JLabel mejabar;
+    private javax.swing.JLabel nama10;
+    private javax.swing.JLabel nama11;
+    private javax.swing.JLabel nama12;
+    private javax.swing.JLabel nama5;
+    private javax.swing.JLabel nama6;
+    private javax.swing.JLabel nama7;
+    private javax.swing.JLabel nama8;
+    private javax.swing.JLabel nama9;
+    private javax.swing.JTextField nmenu;
+    private javax.swing.JTextField notelp;
+    private javax.swing.JLabel orderbar;
+    private PanelRound.PanelRound panelRound1;
+    private PanelRound.PanelRound panelRound2;
+    private PanelRound.PanelRound panelRound3;
+    private PanelRound.PanelRound panelRound4;
+    private javax.swing.JTextField searchlabel;
+    private javax.swing.JLabel stokbar;
+    private javax.swing.JTextField sup;
+    private javax.swing.JLabel supplierbar;
+    private jtable_custom.JTable_Custom tabelsup;
+    private javax.swing.JTextField tanggaltransaksi;
+    private javax.swing.JLabel userbar;
+    private javax.swing.JLabel userbar2;
+    private javax.swing.JPanel userdd;
     // End of variables declaration//GEN-END:variables
 }

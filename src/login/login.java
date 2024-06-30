@@ -12,16 +12,26 @@ import java.sql.Statement;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
+import Model.Model_Login;
+//import java.sql.Blob;
 
 public class login extends javax.swing.JFrame {
+    
+    public String emailPattern = "^[a-zA-Z0-9]+[@]+[a-zA-Z0-9]+[.]+[a-zA-Z0-9]+$";
 
     /**
      * Creates new form login
      */
     public login() {
         initComponents();
+        logbtn.setEnabled(true);
     }
 
+    public void clear(){
+        emailAdd.setText("");
+        pword.setText("");
+        logbtn.setEnabled(false);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -134,7 +144,7 @@ public class login extends javax.swing.JFrame {
 
     private void logbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logbtnActionPerformed
         // TODO add your handling code here:
-        String email, password, query, passdb = null;
+        String fullname, email, password, query, passdb = null;
         String SUrl, SUser, SPass;
         SUrl = "jdbc:Mysql://localhost:3306/cafe";
         SUser = "root";
@@ -150,7 +160,7 @@ public class login extends javax.swing.JFrame {
             } else if("".equals(pword.getText())){
                 JOptionPane.showMessageDialog(new JFrame(), "Password is require", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                email = emailAdd.getName();
+                email = emailAdd.getText();
                 password = pword.getText();
                 
                 query = "SELECT * FROM userlog WHERE email= '" + email + "'";
@@ -159,6 +169,23 @@ public class login extends javax.swing.JFrame {
                 while(rs.next()){
                     passdb = rs.getString("password");
                     notFound = 1;
+                    
+                    fullname = rs.getString("fullname");
+                    email = rs.getString("email");
+                    password = rs.getString("password");
+//                    alamat = rs.getString("alamat");
+//                    Blob gambarBlob = rs.getBlob("foto");
+                    
+                    Model_Login mod = new Model_Login();
+                    mod.setFullname(fullname);
+                    mod.setEmail(email);
+                    mod.setPassword(password);
+//                    mod.setAlamat(alamat);
+//                    mod.setGambar(gambarBlob);
+                    
+                    home Home = new home();
+                    Home.setVisible(true);
+                    Home.revalidate();
                 }
                 
                 if(notFound == 1 && password.equals(passdb)){

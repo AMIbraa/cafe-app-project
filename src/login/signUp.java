@@ -155,7 +155,7 @@ public class signUp extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(new JFrame(), "Password is require", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 fullName = fullname.getText();
-                email = emailAdd.getName();
+                email = emailAdd.getText();
                 password = pword.getText();
                 System.out.println(password);
                 
