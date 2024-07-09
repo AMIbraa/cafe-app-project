@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Key" uuid="ac132694-d94f-4990-8072-1e330fa63229">
-	<property name="ireport.zoom" value="1.9487171000000014"/>
+	<property name="ireport.zoom" value="2.1435888100000087"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="29"/>
+	<property name="ireport.y" value="60"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -20,55 +20,88 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select keranjang.pelanggan, penjualan.tanggal_transaksi, keranjang.kode_menu, keranjang.jumlah, keranjang.nama_menu, keranjang.total_harga, penjualan.status_member from keranjang inner join penjualan on keranjang.no_faktur = penjualan.no_faktur and keranjang.pelanggan = penjualan.pelanggan inner join pembayaran on penjualan.no_faktur = pembayaran.no_faktur and penjualan.tanggal_transaksi = pembayaran.tanggal_transaksi where penjualan.tanggal_transaksi BETWEEN $P{datep1} AND $P{datep2}]]>
+		<![CDATA[select penjualan.no_faktur, penjualan.pelanggan, penjualan.status_member, penjualan.metode_pembayaran, keranjang.kode_menu, keranjang.nama_menu, keranjang.jumlah, keranjang.total_harga, pembayaran.tanggal_transaksi, pembayaran.total_bayar from keranjang inner join penjualan on keranjang.no_faktur = penjualan.no_faktur and keranjang.pelanggan = penjualan.pelanggan inner join pembayaran on penjualan.no_faktur = pembayaran.no_faktur and penjualan.tanggal_transaksi = pembayaran.tanggal_transaksi where penjualan.tanggal_transaksi BETWEEN $P{datep1} AND $P{datep2}]]>
 	</queryString>
+	<field name="no_faktur" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="pelanggan" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="tanggal_transaksi" class="java.sql.Date">
+	<field name="status_member" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="metode_pembayaran" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="kode_menu" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="jumlah" class="java.lang.Integer">
+	<field name="nama_menu" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="nama_menu" class="java.lang.String">
+	<field name="jumlah" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="total_harga" class="java.lang.Double">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="status_member" class="java.lang.String">
+	<field name="tanggal_transaksi" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total_bayar" class="java.lang.Double">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="136" splitType="Stretch">
-			<staticText>
-				<reportElement style="Title" x="170" y="0" width="263" height="62" uuid="01a74543-b870-4151-ba1c-c6a577c992f3"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font pdfFontName="Times-Roman"/>
-				</textElement>
-				<text><![CDATA[Koba]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="SubTitle" x="202" y="62" width="196" height="22" uuid="fa4e6104-b93f-44b1-9df3-50edd6925806"/>
-				<textElement textAlignment="Center">
-					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
-				</textElement>
-				<text><![CDATA[Coffee & Eatery]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="172" y="94" width="383" height="42" uuid="89af9bbb-5e77-45ca-b90c-7be9d323c04d"/>
-				<textElement textAlignment="Right">
-					<font size="10"/>
-				</textElement>
-				<text><![CDATA[Laporan Absensi Penjualan]]></text>
-			</staticText>
+		<band height="148" splitType="Stretch">
+			<frame>
+				<reportElement x="0" y="0" width="555" height="148" uuid="743a048d-1f07-4daf-b0ea-dcbe73ebdcfe"/>
+				<rectangle>
+					<reportElement x="0" y="0" width="555" height="148" forecolor="#6F4929" backcolor="#6F4929" uuid="2046fb00-fcf8-44bd-ba0b-bf9bcab6be9f"/>
+				</rectangle>
+				<staticText>
+					<reportElement style="Column header" x="196" y="102" width="162" height="15" forecolor="#FFFFFF" uuid="bec211fe-cdc0-4645-b3d2-80e850b19468"/>
+					<textElement textAlignment="Center">
+						<font size="10" isItalic="true" isUnderline="false"/>
+					</textElement>
+					<text><![CDATA[Laporan Penjualan]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="228" y="53" width="100" height="18" forecolor="#FFFFFF" uuid="91dcb39d-d4e3-49c4-915d-d3ea2ed90161"/>
+					<textElement textAlignment="Center">
+						<font fontName="Poppins Light" size="10"/>
+					</textElement>
+					<text><![CDATA[Coffee & Eatery]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="207" y="0" width="139" height="68" forecolor="#CEC2B6" uuid="f613e036-85f2-4446-bd94-eae1320e0071"/>
+					<textElement textAlignment="Center">
+						<font fontName="Poppins Black" size="42"/>
+					</textElement>
+					<text><![CDATA[Koba]]></text>
+				</staticText>
+				<line>
+					<reportElement positionType="FixRelativeToBottom" x="228" y="95" width="97" height="1" forecolor="#CEC2B6" uuid="8d1f213f-2c43-480a-9a31-2efbb3828add"/>
+					<graphicElement>
+						<pen lineWidth="0.5" lineColor="#999999"/>
+					</graphicElement>
+				</line>
+				<image>
+					<reportElement x="0" y="2" width="555" height="146" uuid="0b52717a-629b-46e5-b816-c44928103952"/>
+					<imageExpression><![CDATA["C:\\Users\\CIAGamester\\Documents\\KULI AH\\PNG\\Asset 11.png"]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement x="192" y="68" width="172" height="23" forecolor="#FFFFFF" uuid="12504bad-7b7d-48d6-aa7f-ebd5c72a5826"/>
+					<textElement textAlignment="Center">
+						<font fontName="SansSerif" size="6"/>
+					</textElement>
+					<text><![CDATA[Jl. K.H.M. Usman No.191, Kukusan, Kecamatan Beji, 
+Kota Depok, Jawa Barat 16425]]></text>
+				</staticText>
+			</frame>
 		</band>
 	</title>
 	<pageHeader>
@@ -83,39 +116,60 @@
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement style="Column header" x="59" y="0" width="81" height="15" forecolor="#736343" uuid="9f5c5598-0f71-48e2-84bf-1505876f7c10"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement style="Column header" x="59" y="0" width="65" height="15" forecolor="#736343" uuid="9f5c5598-0f71-48e2-84bf-1505876f7c10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
 				<text><![CDATA[Pelanggan]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="219" y="0" width="85" height="15" forecolor="#736343" uuid="69e3d294-1ca4-4b0d-af58-6dfe83154c99"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement style="Column header" x="183" y="0" width="56" height="15" forecolor="#736343" uuid="69e3d294-1ca4-4b0d-af58-6dfe83154c99"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
 				<text><![CDATA[Kode Menu]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="304" y="0" width="94" height="15" forecolor="#736343" uuid="2e704e47-d478-4f9e-a822-c94aabdcf6af"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Nama Menu]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="398" y="1" width="58" height="15" forecolor="#736343" uuid="c657a308-e922-46d5-b4a7-6c2c91667594"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Jumlah(qty)]]></text>
+				<reportElement style="Column header" x="394" y="0" width="68" height="15" forecolor="#736343" uuid="2e704e47-d478-4f9e-a822-c94aabdcf6af"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Total Harga]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" x="0" y="0" width="59" height="15" forecolor="#736343" uuid="617ce698-0104-4389-a015-db8cb62812c9"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Tanggal]]></text>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[No. Faktur]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="140" y="1" width="79" height="15" forecolor="#736343" uuid="98618d8f-03be-45df-af22-f9756fb2cc46"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement style="Column header" x="124" y="0" width="59" height="15" forecolor="#736343" uuid="98618d8f-03be-45df-af22-f9756fb2cc46"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
 				<text><![CDATA[Status]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="456" y="0" width="96" height="15" forecolor="#736343" uuid="9ec1388c-0700-4a25-96ba-bacb31e655f9"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Total Harga]]></text>
+				<reportElement style="Column header" x="336" y="0" width="58" height="15" forecolor="#736343" uuid="c657a308-e922-46d5-b4a7-6c2c91667594"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Jumlah(qty)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="239" y="0" width="97" height="15" forecolor="#736343" uuid="32f497f4-9b45-4c8c-9837-e3a92d7958ee"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Nama Menu]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="462" y="0" width="91" height="15" forecolor="#736343" uuid="336aedb4-4e36-42f0-a6fd-66e44e381f99"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Tanggal Transaksi]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -124,53 +178,40 @@
 			<frame>
 				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="15" uuid="e860cfce-7969-4a40-90e6-14144bbb9aa5"/>
 				<textField>
-					<reportElement x="59" y="0" width="81" height="15" uuid="47c03d64-fa61-43bc-bcda-62fccdfd96a1"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Arial" size="12"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{pelanggan}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="0" y="0" width="59" height="15" uuid="d85eb2b6-c09f-49d8-bd9e-9d5934c81d7b"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Arial" size="12"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{tanggal_transaksi}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="219" y="0" width="85" height="15" uuid="5fbe8cbc-a10a-4536-ac04-9b8881384b64"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Arial" size="12"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{kode_menu}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="304" y="0" width="94" height="15" uuid="f90ae6cd-3289-4bf1-b60c-0812fcb57dec"/>
-					<textElement>
-						<font fontName="Arial" size="12"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{nama_menu}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="398" y="0" width="58" height="15" uuid="138acf15-2c63-4ff8-9528-6aa04addb288"/>
-					<textElement>
-						<font fontName="Arial" size="12"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{jumlah}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="140" y="0" width="79" height="15" uuid="0c85edae-a3b2-4248-b678-3cdd25315dda"/>
-					<textElement textAlignment="Center">
-						<font fontName="Arial" size="12"/>
-					</textElement>
+					<reportElement x="124" y="0" width="59" height="15" uuid="4319ea5d-87bd-4a5b-b20d-355547f8fa96"/>
+					<textElement textAlignment="Center"/>
 					<textFieldExpression><![CDATA[$F{status_member}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="456" y="0" width="96" height="15" uuid="9716f604-f615-4129-bc9d-026840290c58"/>
-					<textElement textAlignment="Center">
-						<font fontName="Arial" size="12"/>
-					</textElement>
+					<reportElement x="183" y="0" width="56" height="15" uuid="c3a51c01-ccfb-435c-865e-c2125126eb72"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{kode_menu}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="249" y="0" width="87" height="15" uuid="c9b37129-cb49-4928-9018-1985de28cff8"/>
+					<textFieldExpression><![CDATA[$F{nama_menu}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="9" y="0" width="47" height="15" uuid="9f50eef6-a581-4974-9923-a1e2e15f6a5c"/>
+					<textFieldExpression><![CDATA[$F{no_faktur}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="59" y="0" width="65" height="15" uuid="e350dd47-8daf-4068-a3a3-52333b50849e"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{pelanggan}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="336" y="0" width="58" height="14" uuid="912a6b2d-d01c-4768-8e20-41ae0fb4f603"/>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{jumlah}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="406" y="0" width="56" height="14" uuid="d8fb3f95-5dae-422a-9d0e-39c211ee1691"/>
 					<textFieldExpression><![CDATA[$F{total_harga}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="466" y="0" width="89" height="14" uuid="6f13ae8c-0546-43a3-bc7b-c82d702f4799"/>
+					<textFieldExpression><![CDATA[$F{tanggal_transaksi}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
@@ -184,7 +225,7 @@
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement style="Column header" x="379" y="94" width="138" height="15" forecolor="#736343" uuid="dc93e0a7-74d1-431c-98e7-bf1cd6cb3b1d"/>
+				<reportElement style="Column header" x="370" y="94" width="138" height="15" forecolor="#736343" uuid="dc93e0a7-74d1-431c-98e7-bf1cd6cb3b1d"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Adyas Amarullah]]></text>
 			</staticText>
@@ -205,7 +246,7 @@
 	<pageFooter>
 		<band height="25" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="-21" y="1" width="597" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="bfc2bc9b-64ad-4822-b73d-47d316b570f8"/>
+				<reportElement mode="Opaque" x="-21" y="1" width="597" height="24" forecolor="#D0B48E" backcolor="#CEC2B6" uuid="bfc2bc9b-64ad-4822-b73d-47d316b570f8"/>
 				<textField>
 					<reportElement style="Column header" x="23" y="1" width="57" height="20" forecolor="#736343" uuid="2023dc74-9299-4ad8-8d06-6d4716a698bb"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">

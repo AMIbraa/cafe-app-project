@@ -19,8 +19,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import javax.swing.table.*;
 import java.sql.ResultSet;
@@ -34,6 +36,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
+import laporan.Laporan;
 
 /**
  *
@@ -115,7 +119,7 @@ public class inventaris extends javax.swing.JFrame {
     }
     
     private void datatable(){
-        Object[] Baris = {"Gambar", "Kode Menu", "Kategori", "Nama Menu", "Harga Pokok", "Harga Jual", "Stok", "Stok Min."};
+        Object[] Baris = {"Kode Menu", "Gambar", "Kategori", "Nama Menu", "Harga Pokok", "Harga Jual", "Stok", "Stok Min."};
         tabmode = new DefaultTableModel(null, Baris);
         tabelsup.setModel(tabmode);        
         tabelsup.setRowHeight(100);
@@ -210,7 +214,6 @@ public class inventaris extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         searchlabel = new javax.swing.JTextField();
-        caribtn = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tabelsup = new jtable_custom.JTable_Custom();
         panelRound3 = new PanelRound.PanelRound();
@@ -237,6 +240,7 @@ public class inventaris extends javax.swing.JFrame {
         nama12 = new javax.swing.JLabel();
         hapusbtn = new javax.swing.JButton();
         editbtn = new javax.swing.JButton();
+        editbtn1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -319,6 +323,9 @@ public class inventaris extends javax.swing.JFrame {
         laporanbar.setFont(new java.awt.Font("Poppins", 1, 16)); // NOI18N
         laporanbar.setText("Laporan");
         laporanbar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                laporanbarMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 laporanbarMouseEntered(evt);
             }
@@ -410,7 +417,7 @@ public class inventaris extends javax.swing.JFrame {
 
         searchlabel.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         searchlabel.setForeground(new java.awt.Color(204, 204, 204));
-        searchlabel.setText("Masukkan Data Menu");
+        searchlabel.setText("Cari Menu");
         searchlabel.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 searchlabelFocusGained(evt);
@@ -424,30 +431,25 @@ public class inventaris extends javax.swing.JFrame {
                 searchlabelActionPerformed(evt);
             }
         });
-
-        caribtn.setBackground(new java.awt.Color(219, 167, 57));
-        caribtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
-        caribtn.setForeground(new java.awt.Color(255, 255, 255));
-        caribtn.setText("Cari");
-        caribtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                caribtnActionPerformed(evt);
+        searchlabel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchlabelKeyReleased(evt);
             }
         });
 
         tabelsup.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "No", "Gambar", "Kode Menu", "Kategori", "Nama Menu", "Harga Pokok", "Harga Jual", "Stok", "Stok Min."
+                "Kode Menu", "Gambar", "Kategori", "Nama Menu", "Harga Pokok", "Harga Jual", "Stok", "Stok Min."
             }
         ));
         tabelsup.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -464,26 +466,20 @@ public class inventaris extends javax.swing.JFrame {
             .addComponent(panelRound2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panelRound1Layout.createSequentialGroup()
                 .addGap(45, 45, 45)
-                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane3)
-                    .addGroup(panelRound1Layout.createSequentialGroup()
-                        .addGap(543, 543, 543)
-                        .addComponent(searchlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16)
-                        .addComponent(caribtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1063, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
         panelRound1Layout.setVerticalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
                 .addComponent(panelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(searchlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(caribtn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(searchlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(276, 276, 276))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         panelRound3.setBackground(new java.awt.Color(206, 194, 182));
@@ -628,7 +624,7 @@ public class inventaris extends javax.swing.JFrame {
                 inputbtnActionPerformed(evt);
             }
         });
-        panelRound3.add(inputbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, 450, 40));
+        panelRound3.add(inputbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, 280, 40));
 
         nama12.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         nama12.setForeground(new java.awt.Color(255, 255, 255));
@@ -658,6 +654,18 @@ public class inventaris extends javax.swing.JFrame {
             }
         });
         panelRound3.add(editbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 390, 210, 40));
+
+        editbtn1.setBackground(new java.awt.Color(111, 72, 41));
+        editbtn1.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        editbtn1.setForeground(new java.awt.Color(255, 255, 255));
+        editbtn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Refresh_optimized.png"))); // NOI18N
+        editbtn1.setText("Muat Ulang");
+        editbtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editbtn1ActionPerformed(evt);
+            }
+        });
+        panelRound3.add(editbtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 390, 140, 40));
 
         javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
         jPanel23.setLayout(jPanel23Layout);
@@ -713,7 +721,7 @@ public class inventaris extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelRound3, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
-                .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -727,7 +735,9 @@ public class inventaris extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1232, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1317, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -860,7 +870,7 @@ public class inventaris extends javax.swing.JFrame {
     }//GEN-LAST:event_userbarMouseExited
 
     private void searchlabelFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchlabelFocusGained
-        if(searchlabel.getText().equals("Masukkan Data Menu")){
+        if(searchlabel.getText().equals("Cari Menu")){
             searchlabel.setText("");
             searchlabel.setForeground(new Color(0,0,0));
         }
@@ -868,7 +878,7 @@ public class inventaris extends javax.swing.JFrame {
 
     private void searchlabelFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchlabelFocusLost
         if(searchlabel.getText().equals("")){
-            searchlabel.setText("Masukkan Data Menu");
+            searchlabel.setText("Cari Menu");
             searchlabel.setForeground(new Color(204,204,204));
         }
     }//GEN-LAST:event_searchlabelFocusLost
@@ -876,32 +886,6 @@ public class inventaris extends javax.swing.JFrame {
     private void searchlabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchlabelActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchlabelActionPerformed
-
-    private void caribtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caribtnActionPerformed
-        Object[] Baris = {"Gambar", "Kode Menu", "Kategori", "Nama Menu", "Harga Pokok", "Harga Jual", "Stok", "Stok Min."};
-        tabmode = new DefaultTableModel(null, Baris);
-        tabelsup.setModel(tabmode);
-        String sql = "SELECT * FROM tambahmenu WHERE id_supplier OR supplier OR pemilik_supplier like '%" + searchlabel.getText() + "%'";
-        try {
-            java.sql.Statement stat = conn.createStatement();
-            ResultSet rs = stat.executeQuery(sql);
-            while(rs.next()){
-                String a = rs.getString("gambar");
-                String b = rs.getString("kode_menu");
-                String c = rs.getString("kategori");
-                String d = rs.getString("nama_menu");
-                String e = rs.getString("harga_pokok");
-                String f = rs.getString("harga_jual");
-                String g = rs.getString("stok");
-                String h = rs.getString("stokmin");
-
-                String[] data = {a,b,c,d,e,f,g,h};
-                tabmode.addRow(data);
-            }
-        } catch(Exception e) {
-            System.err.println("DB Error!" + e.getMessage());
-        }
-    }//GEN-LAST:event_caribtnActionPerformed
 
     private void nama_menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nama_menuActionPerformed
         // TODO add your handling code here:
@@ -989,6 +973,7 @@ public class inventaris extends javax.swing.JFrame {
                 kosong();
                 kode_menu.requestFocus();
                 datatable();
+                setTableRenderer();
             } catch(SQLException e) {
                 JOptionPane.showMessageDialog(null, "Data failed to delete "+ e);
             }
@@ -996,35 +981,79 @@ public class inventaris extends javax.swing.JFrame {
     }//GEN-LAST:event_hapusbtnActionPerformed
 
     private void editbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editbtnActionPerformed
+        int bar =tabelsup.getSelectedRow();
+        String klik = (tabelsup.getModel().getValueAt(bar, 0).toString());
         try {
-            String sql = "update tambahmenu set gambar=?,kategori=?,nama_menu=?,harga_pokok=?,harga_jual=?,stok=?,stokmin=? where kode_menu =?";
+            String sql = "update tambahmenu set kategori=?,nama_menu=?,harga_pokok=?,harga_jual=?,stok=?,stokmin=? where kode_menu ='"+klik+"'";
             PreparedStatement stat = conn.prepareStatement(sql);
-            InputStream is = new FileInputStream(new File(path2));
-            stat.setBlob(1, is);
-            stat.setString(2, kode_menu.getText());
-            stat.setString(3, kategori.getSelectedItem().toString());
-            stat.setString(4, nama_menu.getText());
-            stat.setString(5, harga_pokok.getText());
-            stat.setString(6, harga_jual.getText());
-            stat.setString(7, stok.getText());
-            stat.setString(8, stokmin.getText());
+            stat.setString(1, kategori.getSelectedItem().toString());
+            stat.setString(2, nama_menu.getText());
+            stat.setString(3, harga_pokok.getText());
+            stat.setString(4, harga_jual.getText());
+            stat.setString(5, stok.getText());
+            stat.setString(6, stokmin.getText());
             
             stat.executeUpdate();
             JOptionPane.showMessageDialog(null, "Data berhasil diedit!");
             kosong();
             kode_menu.requestFocus();
+            autoNumberKodeMenu();
             datatable();
+            setTableRenderer();
         } catch(SQLException e) {
             JOptionPane.showMessageDialog(null, "Data failed to edit!" + e);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(inventaris.class.getName()).log(Level.SEVERE, null, ex);
         }
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(inventaris.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }//GEN-LAST:event_editbtnActionPerformed
 
     private void tabelsupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelsupMouseClicked
         int bar = tabelsup.getSelectedRow();
+//        String click =  (tabelsup.getModel().getValueAt(bar, 0).toString());
+//        String sql = "select * from tambahmenu where kode_menu='" + click +"'";
+//        try{
+//            PreparedStatement stat = conn.prepareStatement(sql);
+//            ResultSet rs = stat.executeQuery();
+//            if(rs.next()){
+////                String a = rs.getString(0);
+//                Blob b = rs.getBlob(1);
+//                String path = "C:\\Users\\CIAGamester\\Desktop\\cafe-app-project\\src\\img\\kopi\\img.jpg";
+//                byte[] bytea = b.getBytes(1, (int)b.length());
+//                FileOutputStream fos = new FileOutputStream(path);
+//                fos.write(bytea);
+//                ImageIcon icon = new ImageIcon(bytea);
+//                
+//                
+//                
+//                String c = rs.getString(2);
+//                String d = rs.getString(3);
+//                String e = rs.getString(4);
+//                String f = rs.getString(5);
+//                String g = rs.getString(6);
+//                String h = rs.getString(7);
+//                
+//                nama12.setIcon(icon);
+////                kode_menu.setText(a);
+//                kategori.setSelectedItem(c);
+//                nama_menu.setText(d);
+//                harga_pokok.setText(e);
+//                harga_jual.setText(f);
+//                stok.setText(g);
+//                stokmin.setText(h);
+//            }
+//        }catch(SQLException e){
+//            JOptionPane.showMessageDialog(null, "" + e);
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(inventaris.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (IOException ex) {
+//            Logger.getLogger(inventaris.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         String a = tabmode.getValueAt(bar, 0).toString();
-        String b = tabmode.getValueAt(bar, 1).toString();
+//        String b = tabmode.getValueAt(bar, 1).toString();
+
+//        ImageIcon image = (ImageIcon) tabmode.getValueAt(bar, 1);
+        
         String c = tabmode.getValueAt(bar, 2).toString();
         String d = tabmode.getValueAt(bar, 3).toString();
         String e = tabmode.getValueAt(bar, 4).toString();
@@ -1032,8 +1061,8 @@ public class inventaris extends javax.swing.JFrame {
         String g = tabmode.getValueAt(bar, 6).toString();
         String h = tabmode.getValueAt(bar, 7).toString();
         
-        gambar.setText(a);
-        kode_menu.setText(b);
+//        gambar.setText(b);
+        kode_menu.setText(a);
         kategori.setSelectedItem(c);
         nama_menu.setText(d);
         harga_pokok.setText(e);
@@ -1041,6 +1070,25 @@ public class inventaris extends javax.swing.JFrame {
         stok.setText(g);
         stokmin.setText(h);
     }//GEN-LAST:event_tabelsupMouseClicked
+
+    private void laporanbarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_laporanbarMouseClicked
+        Laporan lap = new Laporan();
+        lap.setVisible(true);
+        lap.pack();
+        lap.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_laporanbarMouseClicked
+
+    private void searchlabelKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchlabelKeyReleased
+        DefaultTableModel dt = (DefaultTableModel) tabelsup.getModel();
+        TableRowSorter<DefaultTableModel> obj = new TableRowSorter<>(dt);
+        tabelsup.setRowSorter(obj);
+        obj.setRowFilter(RowFilter.regexFilter(searchlabel.getText()));
+    }//GEN-LAST:event_searchlabelKeyReleased
+
+    private void editbtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editbtn1ActionPerformed
+        kosong();
+    }//GEN-LAST:event_editbtn1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1078,8 +1126,8 @@ public class inventaris extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton caribtn;
     private javax.swing.JButton editbtn;
+    private javax.swing.JButton editbtn1;
     private javax.swing.JTextField gambar;
     private javax.swing.JButton hapusbtn;
     private javax.swing.JTextField harga_jual;

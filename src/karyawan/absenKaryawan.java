@@ -170,6 +170,7 @@ public class absenKaryawan extends javax.swing.JFrame {
 
         dateChooser = new com.raven.datechooser.DateChooser();
         dateChooser1 = new com.raven.datechooser.DateChooser();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         userdd = new javax.swing.JPanel();
         userbar2 = new javax.swing.JLabel();
@@ -205,6 +206,8 @@ public class absenKaryawan extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelkar = new jtable_custom.JTable_Custom();
         shiftabsen = new javax.swing.JComboBox<>();
+        editbtn2 = new javax.swing.JButton();
+        editbtn3 = new javax.swing.JButton();
         panelRound3 = new PanelRound.PanelRound();
         panelRound4 = new PanelRound.PanelRound();
         jLabel10 = new javax.swing.JLabel();
@@ -429,7 +432,7 @@ public class absenKaryawan extends javax.swing.JFrame {
 
         searchlabel.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         searchlabel.setForeground(new java.awt.Color(204, 204, 204));
-        searchlabel.setText("Masukkan Data Karyawan");
+        searchlabel.setText("Masukkan Nama Karyawan");
         searchlabel.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 searchlabelFocusGained(evt);
@@ -454,7 +457,7 @@ public class absenKaryawan extends javax.swing.JFrame {
                 caribtnActionPerformed(evt);
             }
         });
-        panelRound1.add(caribtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 80, 70, 30));
+        panelRound1.add(caribtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, 70, 30));
 
         tanggalabsen.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         tanggalabsen.addActionListener(new java.awt.event.ActionListener() {
@@ -503,17 +506,19 @@ public class absenKaryawan extends javax.swing.JFrame {
         absenbtn.setBackground(new java.awt.Color(219, 167, 57));
         absenbtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         absenbtn.setForeground(new java.awt.Color(255, 255, 255));
+        absenbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Check_All_optimized.png"))); // NOI18N
         absenbtn.setText("Absen");
         absenbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 absenbtnActionPerformed(evt);
             }
         });
-        panelRound1.add(absenbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 450, 300, 30));
+        panelRound1.add(absenbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 450, 140, 30));
 
         hapusbtn.setBackground(new java.awt.Color(111, 72, 41));
         hapusbtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         hapusbtn.setForeground(new java.awt.Color(255, 255, 255));
+        hapusbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Remove_optimized.png"))); // NOI18N
         hapusbtn.setText("Hapus");
         hapusbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -522,9 +527,10 @@ public class absenKaryawan extends javax.swing.JFrame {
         });
         panelRound1.add(hapusbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 500, 140, -1));
 
-        editbtn.setBackground(new java.awt.Color(219, 167, 57));
+        editbtn.setBackground(new java.awt.Color(111, 72, 41));
         editbtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         editbtn.setForeground(new java.awt.Color(255, 255, 255));
+        editbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Edit_optimized.png"))); // NOI18N
         editbtn.setText("Ubah");
         editbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -533,7 +539,7 @@ public class absenKaryawan extends javax.swing.JFrame {
         });
         panelRound1.add(editbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 500, 140, -1));
 
-        datebtn.setText("...");
+        datebtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Calendar_4_optimized.png"))); // NOI18N
         datebtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 datebtnActionPerformed(evt);
@@ -579,8 +585,31 @@ public class absenKaryawan extends javax.swing.JFrame {
         panelRound1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 700, 400));
 
         shiftabsen.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
-        shiftabsen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Shift 1", "Shift 2", "Shift 3", " " }));
+        shiftabsen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Shift 1", "Shift 2", "Shift 3" }));
         panelRound1.add(shiftabsen, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 310, 300, 30));
+
+        editbtn2.setBackground(new java.awt.Color(111, 72, 41));
+        editbtn2.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        editbtn2.setForeground(new java.awt.Color(255, 255, 255));
+        editbtn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Refresh_optimized.png"))); // NOI18N
+        editbtn2.setText("Muat Ulang");
+        editbtn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editbtn2ActionPerformed(evt);
+            }
+        });
+        panelRound1.add(editbtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 450, -1, 30));
+
+        editbtn3.setBackground(new java.awt.Color(111, 72, 41));
+        editbtn3.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        editbtn3.setForeground(new java.awt.Color(255, 255, 255));
+        editbtn3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Refresh_optimized.png"))); // NOI18N
+        editbtn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editbtn3ActionPerformed(evt);
+            }
+        });
+        panelRound1.add(editbtn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 80, 40, 30));
 
         Tab.addTab("Absen", panelRound1);
 
@@ -637,7 +666,9 @@ public class absenKaryawan extends javax.swing.JFrame {
         simpanbtn.setBackground(new java.awt.Color(219, 167, 57));
         simpanbtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         simpanbtn.setForeground(new java.awt.Color(255, 255, 255));
+        simpanbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Save_optimized.png"))); // NOI18N
         simpanbtn.setText("Simpan");
+        simpanbtn.setIconTextGap(6);
         simpanbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 simpanbtnActionPerformed(evt);
@@ -664,6 +695,7 @@ public class absenKaryawan extends javax.swing.JFrame {
         itelahir.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         panelRound3.add(itelahir, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 160, 300, 30));
 
+        buttonGroup1.add(perem);
         perem.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         perem.setForeground(new java.awt.Color(255, 255, 255));
         perem.setText("Perempuan");
@@ -674,6 +706,7 @@ public class absenKaryawan extends javax.swing.JFrame {
         nama13.setText("Tanggal Lahir");
         panelRound3.add(nama13, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 200, -1, -1));
 
+        buttonGroup1.add(laki);
         laki.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         laki.setForeground(new java.awt.Color(255, 255, 255));
         laki.setText("Laki-laki");
@@ -704,14 +737,24 @@ public class absenKaryawan extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID_Karyawan", "Nama", "No. Telp", "Email", "Tempat Lahir", "Tempat Lahir", "Jenis Kelamin", "Alamat"
+                "ID Karyawan", "Nama", "No. Telp", "Email", "Tempat Lahir", "Tempat Lahir", "Jenis Kelamin", "Alamat"
             }
         ));
+        tabelkar1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelkar1MouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tabelkar1);
 
         panelRound3.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, 1060, 360));
 
         id.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
+        id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idActionPerformed(evt);
+            }
+        });
         panelRound3.add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 300, 30));
 
         nama15.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
@@ -722,6 +765,7 @@ public class absenKaryawan extends javax.swing.JFrame {
         resetbtn1.setBackground(new java.awt.Color(219, 167, 57));
         resetbtn1.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         resetbtn1.setForeground(new java.awt.Color(255, 255, 255));
+        resetbtn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Data_Backup_optimized.png"))); // NOI18N
         resetbtn1.setText("Atur Ulang");
         resetbtn1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -733,6 +777,7 @@ public class absenKaryawan extends javax.swing.JFrame {
         editbtn1.setBackground(new java.awt.Color(219, 167, 57));
         editbtn1.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         editbtn1.setForeground(new java.awt.Color(255, 255, 255));
+        editbtn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Edit_optimized.png"))); // NOI18N
         editbtn1.setText("Ubah");
         editbtn1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -744,6 +789,7 @@ public class absenKaryawan extends javax.swing.JFrame {
         hapusbtn1.setBackground(new java.awt.Color(111, 72, 41));
         hapusbtn1.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         hapusbtn1.setForeground(new java.awt.Color(255, 255, 255));
+        hapusbtn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Remove_optimized.png"))); // NOI18N
         hapusbtn1.setText("Hapus");
         hapusbtn1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -889,7 +935,7 @@ public class absenKaryawan extends javax.swing.JFrame {
     }//GEN-LAST:event_supplierbarMouseClicked
 
     private void searchlabelFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchlabelFocusGained
-        if(searchlabel.getText().equals("Masukkan Data Karyawan")){
+        if(searchlabel.getText().equals("Masukkan Nama Karyawan")){
             searchlabel.setText("");
             searchlabel.setForeground(new Color(0,0,0));
         }
@@ -897,7 +943,7 @@ public class absenKaryawan extends javax.swing.JFrame {
 
     private void searchlabelFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchlabelFocusLost
         if(searchlabel.getText().equals("")){
-            searchlabel.setText("Masukkan Data Karyawan");
+            searchlabel.setText("Masukkan Nama Karyawan");
             searchlabel.setForeground(new Color(204,204,204));
         }
     }//GEN-LAST:event_searchlabelFocusLost
@@ -977,13 +1023,14 @@ public class absenKaryawan extends javax.swing.JFrame {
     }//GEN-LAST:event_hapusbtnActionPerformed
 
     private void editbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editbtnActionPerformed
+        int bar =tabelkar.getSelectedRow();
+        String kliks = (tabelkar.getModel().getValueAt(bar, 0).toString());        
         try {
-            String sql = "update absen_karyawan set fullname=?,shift=?,tanggal_absen=? where id_karyawan =?";
+            String sql = "update absen_karyawan set fullname=?,shift=?,tanggal_absen=? where id_karyawan ='"+kliks+"'";
             PreparedStatement stat = conn.prepareStatement(sql);
-            stat.setString(1, id_karyawan.getText());
-            stat.setString(2, fullname.getText());
-            stat.setString(3, shiftabsen.getSelectedItem().toString());
-            stat.setString(4, tanggalabsen.getText());
+            stat.setString(1, fullname.getText());
+            stat.setString(2, shiftabsen.getSelectedItem().toString());
+            stat.setString(3, tanggalabsen.getText());
 
             stat.executeUpdate();
             JOptionPane.showMessageDialog(null, "Data edited successfully!");
@@ -1087,9 +1134,12 @@ public class absenKaryawan extends javax.swing.JFrame {
     }//GEN-LAST:event_resetbtn1ActionPerformed
 
     private void editbtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editbtn1ActionPerformed
+        int bar =tabelkar1.getSelectedRow();
+        String klik = (tabelkar1.getModel().getValueAt(bar, 0).toString());
         try {
-            String sql = "update karyawan set fullname=?,notelp=?,email=?,tempat_lahir=?,tanggal_lahir=?,jenis_kelamin=?,alamat=? where id_karyawan =?";
+            String sql = "update karyawan set fullname=?,notelp=?,email=?,tempat_lahir=?,tanggal_lahir=?,jenis_kelamin=?,alamat=? where id_karyawan ='"+klik+"'";
             PreparedStatement stat = conn.prepareStatement(sql);
+            
             stat.setString(1, fullname.getText());
             stat.setString(2, itelp.getText());
             stat.setString(3, imail.getText());
@@ -1114,7 +1164,7 @@ public class absenKaryawan extends javax.swing.JFrame {
     private void hapusbtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusbtn1ActionPerformed
         int ok = JOptionPane.showConfirmDialog(null, "delete", "Confirm Dialog", JOptionPane.YES_NO_CANCEL_OPTION);
         if (ok == 0){
-            String sql = "delete from karyawan where id_karyawan ='"+id_karyawan.getText()+"'";
+            String sql = "delete from karyawan where id_karyawan ='"+id.getText()+"'";
             try {
                 PreparedStatement stat = conn.prepareStatement(sql);
                 stat.executeUpdate();
@@ -1122,11 +1172,46 @@ public class absenKaryawan extends javax.swing.JFrame {
                 kosongin();
                 id_karyawan.requestFocus();
                 datatablein();
+                autoNumberID();
             } catch(SQLException e) {
                 JOptionPane.showMessageDialog(null, "Data failed to delete "+ e);
             }
         }
     }//GEN-LAST:event_hapusbtn1ActionPerformed
+
+    private void editbtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editbtn2ActionPerformed
+        kosong();
+    }//GEN-LAST:event_editbtn2ActionPerformed
+
+    private void editbtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editbtn3ActionPerformed
+        datatable();
+    }//GEN-LAST:event_editbtn3ActionPerformed
+
+    private void tabelkar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelkar1MouseClicked
+        int bar = tabelkar1.getSelectedRow();
+        String a = tabmode1.getValueAt(bar, 0).toString();
+        String b = tabmode1.getValueAt(bar, 1).toString();
+        String c = tabmode1.getValueAt(bar, 2).toString();
+        String d = tabmode1.getValueAt(bar, 3).toString();
+        String e = tabmode1.getValueAt(bar, 4).toString();
+        String f = tabmode1.getValueAt(bar, 5).toString();
+        String g = tabmode1.getValueAt(bar, 6).toString();
+        String h = tabmode1.getValueAt(bar, 6).toString();
+        
+        id.setText(a);
+        iname.setText(b);
+        itelp.setText(c);
+        imail.setText(d);
+        itelahir.setText(e);
+        italahir.setText(f);
+        if(g.equals("Laki-laki")) {laki.setSelected(true); perem.setSelected(false);}
+        else {laki.setSelected(false); perem.setSelected(true);}
+        ialamat.setText(h);
+    }//GEN-LAST:event_tabelkar1MouseClicked
+
+    private void idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1167,6 +1252,7 @@ public class absenKaryawan extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private raven.tabbed.TabbedPaneCustom Tab;
     private javax.swing.JButton absenbtn;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton cariId;
     private javax.swing.JButton caribtn;
     private com.raven.datechooser.DateChooser dateChooser;
@@ -1175,6 +1261,8 @@ public class absenKaryawan extends javax.swing.JFrame {
     private javax.swing.JButton datelahirbtn;
     private javax.swing.JButton editbtn;
     private javax.swing.JButton editbtn1;
+    private javax.swing.JButton editbtn2;
+    private javax.swing.JButton editbtn3;
     private javax.swing.JTextField fullname;
     private javax.swing.JButton hapusbtn;
     private javax.swing.JButton hapusbtn1;

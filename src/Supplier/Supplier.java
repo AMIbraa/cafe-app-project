@@ -17,7 +17,9 @@ import pelanggan.pelanggan;
 import java.sql.*;
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -32,6 +34,7 @@ public class Supplier extends javax.swing.JFrame {
     public Supplier() {
         initComponents();
         datatable();
+        aktif();
         autoNumberID();
     }
     
@@ -57,7 +60,7 @@ public class Supplier extends javax.swing.JFrame {
         notelp.setText("");
         tanggaltransaksi.setText("");
     }
-
+    
     private void datatable(){
         Object[] Baris = {"ID Supplier", "Supplier", "Kode Menu", "Nama Menu", "Jumlah", "Harga", "No.Telp", "Tanggal."};
         tabmode = new DefaultTableModel(null, Baris);
@@ -104,6 +107,29 @@ public class Supplier extends javax.swing.JFrame {
         }
     }
     
+    String kdm, nma, hrgs;
+    
+    public String getKdm(){
+        return kdm;
+    }
+    
+    public String getNma(){
+        return nma;
+    }
+    
+    public String getHrg(){
+        return hrgs;
+    }
+    
+    
+    public void menuTerpilih(){
+        cariMenu cari = new cariMenu();
+        cari.tabmenu = this;
+        kdmenu.setText(kdm);
+        nmenu.setText(nma);
+        hrg.setText(hrgs);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -132,7 +158,6 @@ public class Supplier extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         searchlabel = new javax.swing.JTextField();
-        caribtn = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tabelsup = new jtable_custom.JTable_Custom();
         panelRound3 = new PanelRound.PanelRound();
@@ -159,6 +184,8 @@ public class Supplier extends javax.swing.JFrame {
         nama12 = new javax.swing.JLabel();
         datebtn = new javax.swing.JButton();
         tanggaltransaksi = new javax.swing.JTextField();
+        cariPelanggan = new javax.swing.JButton();
+        editbtn1 = new javax.swing.JButton();
 
         dateChooser.setForeground(new java.awt.Color(111, 72, 41));
         dateChooser.setDateFormat("yyyy-MM-dd");
@@ -356,14 +383,9 @@ public class Supplier extends javax.swing.JFrame {
                 searchlabelActionPerformed(evt);
             }
         });
-
-        caribtn.setBackground(new java.awt.Color(219, 167, 57));
-        caribtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
-        caribtn.setForeground(new java.awt.Color(255, 255, 255));
-        caribtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Search_optimized.png"))); // NOI18N
-        caribtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                caribtnActionPerformed(evt);
+        searchlabel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchlabelKeyReleased(evt);
             }
         });
 
@@ -398,26 +420,20 @@ public class Supplier extends javax.swing.JFrame {
             .addComponent(panelRound2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panelRound1Layout.createSequentialGroup()
                 .addGap(45, 45, 45)
-                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1063, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelRound1Layout.createSequentialGroup()
-                        .addGap(570, 570, 570)
-                        .addComponent(searchlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(caribtn, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(searchlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
         panelRound1Layout.setVerticalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
                 .addComponent(panelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(searchlabel, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(caribtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(searchlabel, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(19, 19, 19))
         );
 
         panelRound3.setBackground(new java.awt.Color(206, 194, 182));
@@ -450,7 +466,7 @@ public class Supplier extends javax.swing.JFrame {
                 kdmenuActionPerformed(evt);
             }
         });
-        panelRound3.add(kdmenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 450, 30));
+        panelRound3.add(kdmenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 360, 30));
 
         sup.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         sup.addActionListener(new java.awt.event.ActionListener() {
@@ -522,17 +538,19 @@ public class Supplier extends javax.swing.JFrame {
         inputbtn.setBackground(new java.awt.Color(219, 167, 57));
         inputbtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         inputbtn.setForeground(new java.awt.Color(255, 255, 255));
+        inputbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Add_optimized.png"))); // NOI18N
         inputbtn.setText("Tambah");
         inputbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inputbtnActionPerformed(evt);
             }
         });
-        panelRound3.add(inputbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, 450, 40));
+        panelRound3.add(inputbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, 280, 40));
 
         hapusbtn.setBackground(new java.awt.Color(111, 72, 41));
         hapusbtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         hapusbtn.setForeground(new java.awt.Color(255, 255, 255));
+        hapusbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Remove_optimized.png"))); // NOI18N
         hapusbtn.setText("Hapus");
         hapusbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -544,6 +562,7 @@ public class Supplier extends javax.swing.JFrame {
         editbtn.setBackground(new java.awt.Color(111, 72, 41));
         editbtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         editbtn.setForeground(new java.awt.Color(255, 255, 255));
+        editbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Edit_optimized.png"))); // NOI18N
         editbtn.setText("Ubah");
         editbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -589,6 +608,29 @@ public class Supplier extends javax.swing.JFrame {
         });
         panelRound3.add(tanggaltransaksi, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 330, 310, 30));
 
+        cariPelanggan.setBackground(new java.awt.Color(219, 167, 57));
+        cariPelanggan.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        cariPelanggan.setForeground(new java.awt.Color(255, 255, 255));
+        cariPelanggan.setText("Cari");
+        cariPelanggan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cariPelangganActionPerformed(evt);
+            }
+        });
+        panelRound3.add(cariPelanggan, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, 70, -1));
+
+        editbtn1.setBackground(new java.awt.Color(111, 72, 41));
+        editbtn1.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        editbtn1.setForeground(new java.awt.Color(255, 255, 255));
+        editbtn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Refresh_optimized.png"))); // NOI18N
+        editbtn1.setText("Muat Ulang");
+        editbtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editbtn1ActionPerformed(evt);
+            }
+        });
+        panelRound3.add(editbtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 390, 140, 40));
+
         javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
         jPanel23.setLayout(jPanel23Layout);
         jPanel23Layout.setHorizontalGroup(
@@ -598,7 +640,7 @@ public class Supplier extends javax.swing.JFrame {
                 .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelRound3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(269, Short.MAX_VALUE))
             .addGroup(jPanel23Layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(homebar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -654,13 +696,15 @@ public class Supplier extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1260, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1347, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1397, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -818,32 +862,6 @@ public class Supplier extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_searchlabelActionPerformed
 
-    private void caribtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caribtnActionPerformed
-        Object[] Baris = {"ID Supplier", "Supplier", "Kode Menu", "Nama Menu", "Jumlah", "Harga", "No.Telp", "Tanggal"};
-        tabmode = new DefaultTableModel(null, Baris);
-        tabelsup.setModel(tabmode);
-        String sql = "SELECT * FROM supplier WHERE id_supplier OR supplier OR kode_menu OR nama_menu like '%" + searchlabel.getText() + "%'";
-        try {
-            java.sql.Statement stat = conn.createStatement();
-            ResultSet rs = stat.executeQuery(sql);
-            while(rs.next()){
-                String a = rs.getString("id_supplier");
-                String b = rs.getString("supplier");
-                String c = rs.getString("kode_menu");
-                String d = rs.getString("nama_menu");
-                String e = rs.getString("jumlah");
-                String f = rs.getString("harga_beli");
-                String g = rs.getString("no_telp");
-                String h = rs.getString("tanggal");
-
-                String[] data = {a,b,c,d,e,f,g,h};
-                tabmode.addRow(data);
-            }
-        } catch(Exception e) {
-            System.err.println("DB Error!" + e.getMessage());
-        }
-    }//GEN-LAST:event_caribtnActionPerformed
-
     private void tabelsupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelsupMouseClicked
         int bar = tabelsup.getSelectedRow();
         String a = tabmode.getValueAt(bar, 0).toString();
@@ -928,24 +946,26 @@ public class Supplier extends javax.swing.JFrame {
     }//GEN-LAST:event_hapusbtnActionPerformed
 
     private void editbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editbtnActionPerformed
+        int bar =tabelsup.getSelectedRow();
+        String id = (tabelsup.getModel().getValueAt(bar, 0).toString());
+        String kd = (tabelsup.getModel().getValueAt(bar, 2).toString());
         try {
-            String sql = "update supplier set id_supplier=?,supplier=?,nama_menu=?,jumlah=?,harga_beli=?,no_telp=?,tanggal=? where kode_menu =?";
+            String sql = "update supplier set supplier=?,nama_menu=?,jumlah=?,harga_beli=?,no_telp=?,tanggal=? where kode_menu ='"+kd+"' and id_supplier='"+id+"'";
             PreparedStatement stat = conn.prepareStatement(sql);
-            stat.setString(1, idsup.getText());
-            stat.setString(2, sup.getText());
-            stat.setString(3, kdmenu.getText());
-            stat.setString(4, nmenu.getText());
-            stat.setString(5, jmlh.getText());
-            stat.setString(6, hrg.getText());
-            stat.setString(7, notelp.getText());
-            stat.setString(8, tanggaltransaksi.getText());
+            stat.setString(1, sup.getText());
+            stat.setString(2, nmenu.getText());
+            stat.setString(3, jmlh.getText());
+            stat.setString(4, hrg.getText());
+            stat.setString(5, notelp.getText());
+            stat.setString(6, tanggaltransaksi.getText());
 
             stat.executeUpdate();
             JOptionPane.showMessageDialog(null, "Data berhasil diedit!");
             kosong();
-            sup.requestFocus();
-            datatable();
+            idsup.requestFocus();
+            kdmenu.requestFocus();
             autoNumberID();
+            datatable();
         } catch(SQLException e) {
             JOptionPane.showMessageDialog(null, "Data failed to edit!" + e);
         }
@@ -966,6 +986,28 @@ public class Supplier extends javax.swing.JFrame {
     private void tanggaltransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tanggaltransaksiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tanggaltransaksiActionPerformed
+
+    private void cariPelangganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cariPelangganActionPerformed
+        cariMenu cm =new cariMenu();
+        cm.tabmenu = this;
+        cm.setVisible(true);
+        cm.setResizable(false);
+        kdmenu.setEnabled(false);
+        nmenu.setEnabled(false);
+        hrg.setEnabled(false);
+    }//GEN-LAST:event_cariPelangganActionPerformed
+
+    private void searchlabelKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchlabelKeyReleased
+        DefaultTableModel dt = (DefaultTableModel) tabelsup.getModel();
+        TableRowSorter<DefaultTableModel> obj = new TableRowSorter<>(dt);
+        tabelsup.setRowSorter(obj);
+        obj.setRowFilter(RowFilter.regexFilter(searchlabel.getText()));
+    }//GEN-LAST:event_searchlabelKeyReleased
+
+    private void editbtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editbtn1ActionPerformed
+        kosong();
+        autoNumberID();
+    }//GEN-LAST:event_editbtn1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1003,10 +1045,11 @@ public class Supplier extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton caribtn;
+    private javax.swing.JButton cariPelanggan;
     private com.raven.datechooser.DateChooser dateChooser;
     private javax.swing.JButton datebtn;
     private javax.swing.JButton editbtn;
+    private javax.swing.JButton editbtn1;
     private javax.swing.JButton hapusbtn;
     private javax.swing.JLabel homebar;
     private javax.swing.JTextField hrg;

@@ -15,19 +15,28 @@ import home.home;
 import Supplier.Supplier;
 import connection.newConnection;
 import inventaris.inventaris;
+import karyawan.absenKaryawan;
+
 import java.awt.Color;
 import java.io.File;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import javax.swing.JOptionPane;
-import karyawan.absenKaryawan;
+import javax.swing.RowFilter;
+import javax.swing.table.TableRowSorter;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
 /**
@@ -38,6 +47,7 @@ public class Laporan extends javax.swing.JFrame {
 
     
     public Connection conn = new newConnection().connect();
+    private DefaultTableModel tabmode;
     private DefaultTableModel tabmode1;
     private DefaultTableModel tabmode2;
     private DefaultTableModel tabmode3;
@@ -74,7 +84,7 @@ public class Laporan extends javax.swing.JFrame {
         }
     }
     
-     private void tabelpenjualan(){
+    private void tabelpenjualan(){
         Object[] Baris = {"Tanggal Transaksi", "Pelanggan", "Status", "Kode Menu", "Nama Menu", "Jumlah", "Total Harga"};
         tabmode2 = new DefaultTableModel(null, Baris);
         tabelpen.setModel(tabmode2);
@@ -169,6 +179,7 @@ public class Laporan extends javax.swing.JFrame {
         tanggalabsenp2 = new javax.swing.JTextField();
         datebtnp2 = new javax.swing.JButton();
         jLabel27 = new javax.swing.JLabel();
+        editbtn3 = new javax.swing.JButton();
         panelRound11 = new PanelRound.PanelRound();
         jLabel22 = new javax.swing.JLabel();
         panelRound4 = new PanelRound.PanelRound();
@@ -185,6 +196,7 @@ public class Laporan extends javax.swing.JFrame {
         jLabel25 = new javax.swing.JLabel();
         tanggalabsens2 = new javax.swing.JTextField();
         datebtns2 = new javax.swing.JButton();
+        editbtn4 = new javax.swing.JButton();
         panelRound9 = new PanelRound.PanelRound();
         jLabel14 = new javax.swing.JLabel();
         panelRound2 = new PanelRound.PanelRound();
@@ -201,6 +213,7 @@ public class Laporan extends javax.swing.JFrame {
         jLabel26 = new javax.swing.JLabel();
         datebtnk2 = new javax.swing.JButton();
         tanggalabsenk2 = new javax.swing.JTextField();
+        editbtn5 = new javax.swing.JButton();
         laporanbar = new javax.swing.JLabel();
         supplierbar = new javax.swing.JLabel();
         karyawanbar = new javax.swing.JLabel();
@@ -345,7 +358,7 @@ public class Laporan extends javax.swing.JFrame {
                 searchlabelpActionPerformed(evt);
             }
         });
-        panelRound10.add(searchlabelp, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 320, 30));
+        panelRound10.add(searchlabelp, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 270, 30));
 
         jLabel20.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
@@ -419,6 +432,17 @@ public class Laporan extends javax.swing.JFrame {
         jLabel27.setText("s/d");
         panelRound10.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 90, 30, 30));
 
+        editbtn3.setBackground(new java.awt.Color(111, 72, 41));
+        editbtn3.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        editbtn3.setForeground(new java.awt.Color(255, 255, 255));
+        editbtn3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Refresh_optimized.png"))); // NOI18N
+        editbtn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editbtn3ActionPerformed(evt);
+            }
+        });
+        panelRound10.add(editbtn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 40, 30));
+
         Tab.addTab("Penjualan", panelRound10);
 
         panelRound11.setBackground(new java.awt.Color(206, 194, 182));
@@ -464,7 +488,7 @@ public class Laporan extends javax.swing.JFrame {
                 searchlabelsActionPerformed(evt);
             }
         });
-        panelRound11.add(searchlabels, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 320, 30));
+        panelRound11.add(searchlabels, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 270, 30));
 
         jLabel24.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(255, 255, 255));
@@ -513,7 +537,7 @@ public class Laporan extends javax.swing.JFrame {
                 caribtn2ActionPerformed(evt);
             }
         });
-        panelRound11.add(caribtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 90, 100, 30));
+        panelRound11.add(caribtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 90, 110, 30));
 
         cetaklsbtn.setBackground(new java.awt.Color(111, 72, 41));
         cetaklsbtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
@@ -549,6 +573,17 @@ public class Laporan extends javax.swing.JFrame {
             }
         });
         panelRound11.add(datebtns2, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 90, 40, 30));
+
+        editbtn4.setBackground(new java.awt.Color(111, 72, 41));
+        editbtn4.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        editbtn4.setForeground(new java.awt.Color(255, 255, 255));
+        editbtn4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Refresh_optimized.png"))); // NOI18N
+        editbtn4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editbtn4ActionPerformed(evt);
+            }
+        });
+        panelRound11.add(editbtn4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 40, 30));
 
         Tab.addTab("Supplier", panelRound11);
 
@@ -594,7 +629,7 @@ public class Laporan extends javax.swing.JFrame {
                 searchlabelActionPerformed(evt);
             }
         });
-        panelRound9.add(searchlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 320, 30));
+        panelRound9.add(searchlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 270, 30));
 
         jLabel18.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
@@ -679,6 +714,17 @@ public class Laporan extends javax.swing.JFrame {
             }
         });
         panelRound9.add(tanggalabsenk2, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 90, 150, 30));
+
+        editbtn5.setBackground(new java.awt.Color(111, 72, 41));
+        editbtn5.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        editbtn5.setForeground(new java.awt.Color(255, 255, 255));
+        editbtn5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Refresh_optimized.png"))); // NOI18N
+        editbtn5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editbtn5ActionPerformed(evt);
+            }
+        });
+        panelRound9.add(editbtn5, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 40, 30));
 
         Tab.addTab("Karyawan", panelRound9);
 
@@ -808,7 +854,11 @@ public class Laporan extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void userbar3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userbar3MouseClicked
-        // TODO add your handling code here:
+        logout Logout = new logout();
+        Logout.setVisible(true);
+        Logout.pack();
+        Logout.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_userbar3MouseClicked
 
     private void userbar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userbar1MouseClicked
@@ -850,36 +900,25 @@ public class Laporan extends javax.swing.JFrame {
         tabelkaryawan();
     }//GEN-LAST:event_datebtnk1ActionPerformed
 
-    private void caribtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caribtn1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_caribtn1ActionPerformed
-
     private void cetaklkbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cetaklkbtnActionPerformed
-     
-        
+        Locale locale = new Locale("id", "ID");
+        Locale.setDefault(locale);
         try {
-            String reportPath = "src/laporan/LaporanKaryawans.jasper";
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/cafe","root","");
+            File file = new File("src/laporan/LaporanKaryawans.jrxml");
             
-//            Connection conc = new newConnection().connect();
-            HashMap parameter = new HashMap();
+            Map<String, Object> param = new HashMap<>();
+            param.put("datek1", tanggalabsenk1.getText());
+            param.put("datek2", tanggalabsenk2.getText());
             
-            parameter.put("datek1", tanggalabsenk1.getText());
-            parameter.put("datek2", tanggalabsenk2.getText());
-            
-            File reportFile = new File(reportPath);
-            JasperReport jr = (JasperReport) JRLoader.loadObject(reportFile);
-            JasperPrint print = JasperFillManager.fillReport(jr,parameter,conn);
-            JasperViewer.viewReport(print,false);
-            JasperViewer.setDefaultLookAndFeelDecorated(true);
-//            viewer.setVisible(true);
-        } catch(Exception e) {
-            JOptionPane.showMessageDialog(this, "Error displaying report" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JasperDesign JasperDesign = JRXmlLoader.load(file);
+            JasperReport JasperReport = JasperCompileManager.compileReport(JasperDesign);
+            JasperPrint JasperPrint = JasperFillManager.fillReport(JasperReport, param, conn);
+            JasperViewer.viewReport(JasperPrint, false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_cetaklkbtnActionPerformed
-
-    private void caribtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caribtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_caribtnActionPerformed
 
     private void searchlabelpFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchlabelpFocusGained
         if(searchlabelp.getText().equals("Masukkan Data Penjualan")){
@@ -900,22 +939,22 @@ public class Laporan extends javax.swing.JFrame {
     }//GEN-LAST:event_searchlabelpActionPerformed
 
     private void cetaklpbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cetaklpbtnActionPerformed
+        Locale locale = new Locale("id", "ID");
+        Locale.setDefault(locale);
         try {
-            String reportPath = "src/laporan/LaporanPenjualan.jasper";
-            Connection conc = new newConnection().connect();
-            HashMap parameter = new HashMap();
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/cafe","root","");
+            File file = new File("src/laporan/LaporanPenjualan.jrxml");
             
-            parameter.put("datep1", tanggalabsenp1.getText());
-            parameter.put("datep2", tanggalabsenp2.getText());
+            Map<String, Object> param = new HashMap<>();
+            param.put("datep1", tanggalabsenp1.getText());
+            param.put("datep2", tanggalabsenp2.getText());
             
-            File reportFile = new File(reportPath);
-            JasperReport jr = (JasperReport) JRLoader.loadObject(reportFile);
-            JasperPrint print = JasperFillManager.fillReport(jr,parameter,conc);
-            JasperViewer.viewReport(print,false);
-            JasperViewer.setDefaultLookAndFeelDecorated(true);
-//            viewer.setVisible(true);
-        } catch(Exception e) {
-            JOptionPane.showMessageDialog(this, "Error displaying report" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JasperDesign JasperDesign = JRXmlLoader.load(file);
+            JasperReport JasperReport = JasperCompileManager.compileReport(JasperDesign);
+            JasperPrint JasperPrint = JasperFillManager.fillReport(JasperReport, param, conn);
+            JasperViewer.viewReport(JasperPrint, false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_cetaklpbtnActionPerformed
 
@@ -946,27 +985,23 @@ public class Laporan extends javax.swing.JFrame {
         tabelsupplier();
     }//GEN-LAST:event_datebtns1ActionPerformed
 
-    private void caribtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caribtn2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_caribtn2ActionPerformed
-
     private void cetaklsbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cetaklsbtnActionPerformed
+      Locale locale = new Locale("id", "ID");
+        Locale.setDefault(locale);
         try {
-            String reportPath = "src/laporan/LaporanSupplier.jasper";
-            Connection conc = new newConnection().connect();
-            HashMap parameter = new HashMap();
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/cafe","root","");
+            File file = new File("src/laporan/LaporanSupplier.jrxml");
             
-            parameter.put("dates1", tanggalabsens1.getText());
-            parameter.put("dates2", tanggalabsens2.getText());
+            Map<String, Object> param = new HashMap<>();
+            param.put("dates1", tanggalabsens1.getText());
+            param.put("dates2", tanggalabsens2.getText());
             
-            File reportFile = new File(reportPath);
-            JasperReport jr = (JasperReport) JRLoader.loadObject(reportFile);
-            JasperPrint print = JasperFillManager.fillReport(jr,parameter,conc);
-            JasperViewer.viewReport(print,false);
-            JasperViewer.setDefaultLookAndFeelDecorated(true);
-//            viewer.setVisible(true);
-        } catch(Exception e) {
-            JOptionPane.showMessageDialog(this, "Error displaying report" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JasperDesign JasperDesign = JRXmlLoader.load(file);
+            JasperReport JasperReport = JasperCompileManager.compileReport(JasperDesign);
+            JasperPrint JasperPrint = JasperFillManager.fillReport(JasperReport, param, conn);
+            JasperViewer.viewReport(JasperPrint, false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_cetaklsbtnActionPerformed
 
@@ -1118,6 +1153,99 @@ public class Laporan extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tanggalabsenp1ActionPerformed
 
+    private void caribtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caribtn1ActionPerformed
+        Object[] Baris = {"ID Karyawan", "Nama Karyawan", "Shift", "Tanggal"};
+        tabmode = new DefaultTableModel(null, Baris);
+        tabelkar.setModel(tabmode);
+        String sql = "SELECT * FROM absen_karyawan WHERE id_karyawan OR fullname like '%" + searchlabel.getText() + "%'";
+        try {
+            java.sql.Statement stat = conn.createStatement();
+            ResultSet rs = stat.executeQuery(sql);
+            while(rs.next()){
+                String a = rs.getString("id_karyawan");
+                String b = rs.getString("fullname");
+                String c = rs.getString("shift");
+                String d = rs.getString("tanggal_absen");
+
+                String[] data = {a,b,c,d};
+                tabmode.addRow(data);
+            }
+        } catch(Exception e) {
+            System.err.println("DB Error!" + e.getMessage());
+        }
+    }//GEN-LAST:event_caribtn1ActionPerformed
+
+    private void caribtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caribtn2ActionPerformed
+        Object[] Baris = {"ID Supplier", "Supplier", "Kode Menu", "Nama Menu", "Jumlah", "Harga", "No.Telp", "Tanggal"};
+        tabmode = new DefaultTableModel(null, Baris);
+        tabelsup.setModel(tabmode);
+        String sql = "SELECT * FROM supplier WHERE kode_menu OR nama_menu like '%" + searchlabels.getText() + "%'";
+        try {
+            java.sql.Statement stat = conn.createStatement();
+            ResultSet rs = stat.executeQuery(sql);
+            while(rs.next()){
+                String a = rs.getString("id_supplier");
+                String b = rs.getString("supplier");
+                String c = rs.getString("kode_menu");
+                String d = rs.getString("nama_menu");
+                String e = rs.getString("jumlah");
+                String f = rs.getString("harga_beli");
+                String g = rs.getString("no_telp");
+                String h = rs.getString("tanggal");
+
+                String[] data = {a,b,c,d,e,f,g,h};
+                tabmode.addRow(data);
+            }
+        } catch(Exception e) {
+            System.err.println("DB Error!" + e.getMessage());
+        }
+    }//GEN-LAST:event_caribtn2ActionPerformed
+
+    private void caribtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caribtnActionPerformed
+        Object[] Baris = {"Tanggal Transaksi", "Pelanggan", "Status", "Kode Menu", "Nama Menu", "Jumlah", "Total Harga"};
+        tabmode = new DefaultTableModel(null, Baris);
+        tabelpen.setModel(tabmode);
+        String sql = "select keranjang.pelanggan, "
+        + "penjualan.tanggal_transaksi, keranjang.kode_menu, "
+        + "keranjang.jumlah, keranjang.nama_menu, "
+        + "keranjang.total_harga, penjualan.status_member "
+        + "from keranjang inner join penjualan on keranjang.no_faktur = penjualan.no_faktur "
+        + "and keranjang.pelanggan = penjualan.pelanggan "
+        + "inner join pembayaran on penjualan.no_faktur = pembayaran.no_faktur "
+        + "and penjualan.tanggal_transaksi = pembayaran.tanggal_transaksi "
+        + "WHERE keranjang.pelanggan like '%"+searchlabelp.getText()+"%'";
+        try {
+            java.sql.Statement stat = conn.createStatement();
+            ResultSet rs = stat.executeQuery(sql);
+            while(rs.next()){
+                String a = rs.getString("tanggal_transaksi");
+                String b = rs.getString("pelanggan");
+                String c = rs.getString("status_member");
+                String d = rs.getString("kode_menu");
+                String e = rs.getString("nama_menu");
+                String f = rs.getString("jumlah");
+                String g = rs.getString("total_harga");
+
+                Object[] data = {a,b,c,d,e,f,g};
+                tabmode.addRow(data);
+            }
+        } catch(Exception e) {
+            System.err.println("DB Error!" + e.getMessage());
+        }
+    }//GEN-LAST:event_caribtnActionPerformed
+
+    private void editbtn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editbtn3ActionPerformed
+        tabelpenjualan();
+    }//GEN-LAST:event_editbtn3ActionPerformed
+
+    private void editbtn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editbtn4ActionPerformed
+        tabelsupplier();
+    }//GEN-LAST:event_editbtn4ActionPerformed
+
+    private void editbtn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editbtn5ActionPerformed
+        tabelkaryawan();
+    }//GEN-LAST:event_editbtn5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1173,6 +1301,9 @@ public class Laporan extends javax.swing.JFrame {
     private javax.swing.JButton datebtnp2;
     private javax.swing.JButton datebtns1;
     private javax.swing.JButton datebtns2;
+    private javax.swing.JButton editbtn3;
+    private javax.swing.JButton editbtn4;
+    private javax.swing.JButton editbtn5;
     private javax.swing.JLabel homebar;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel14;

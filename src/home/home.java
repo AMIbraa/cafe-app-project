@@ -275,7 +275,7 @@ public class home extends javax.swing.JFrame {
 
         jLabel26.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel26.setText("Nama Menu");
+        jLabel26.setText("Jumlah Menu");
         panelRound1.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, -1, -1));
 
         jLabel27.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
@@ -489,7 +489,8 @@ public class home extends javax.swing.JFrame {
         jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 800, -1, -1));
 
         jLabel30.setFont(new java.awt.Font("Poppins", 1, 28)); // NOI18N
-        jLabel30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Control Panel.png"))); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(111, 72, 41));
+        jLabel30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Control Panel coklat.png"))); // NOI18N
         jLabel30.setText("Dashboard");
         jLabel30.setIconTextGap(10);
         jPanel1.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, 240, 40));

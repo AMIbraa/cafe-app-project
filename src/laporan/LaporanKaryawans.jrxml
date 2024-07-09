@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Key" uuid="ac132694-d94f-4990-8072-1e330fa63229">
-	<property name="ireport.zoom" value="1.9487171000000014"/>
+	<property name="ireport.zoom" value="2.0000000000000044"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="29"/>
+	<property name="ireport.y" value="57"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -38,28 +38,52 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="136" splitType="Stretch">
-			<staticText>
-				<reportElement style="Title" x="170" y="0" width="263" height="62" uuid="01a74543-b870-4151-ba1c-c6a577c992f3"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font pdfFontName="Times-Roman"/>
-				</textElement>
-				<text><![CDATA[Koba]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="SubTitle" x="202" y="62" width="196" height="22" uuid="fa4e6104-b93f-44b1-9df3-50edd6925806"/>
-				<textElement textAlignment="Center">
-					<font fontName="Times New Roman" pdfFontName="Times-Roman"/>
-				</textElement>
-				<text><![CDATA[Coffee & Eatery]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="172" y="94" width="383" height="42" uuid="89af9bbb-5e77-45ca-b90c-7be9d323c04d"/>
-				<textElement textAlignment="Right">
-					<font size="10"/>
-				</textElement>
-				<text><![CDATA[Laporan Absensi Karyawan]]></text>
-			</staticText>
+		<band height="148" splitType="Stretch">
+			<frame>
+				<reportElement x="0" y="0" width="555" height="148" uuid="448861ef-f65b-4233-b37f-e055a09a5a2e"/>
+				<rectangle>
+					<reportElement x="0" y="0" width="555" height="148" forecolor="#6F4929" backcolor="#6F4929" uuid="2e65e0ca-bc6e-4c19-bdf0-659410c266e5"/>
+				</rectangle>
+				<staticText>
+					<reportElement style="Column header" x="196" y="102" width="162" height="15" forecolor="#FFFFFF" uuid="f979addf-7d00-4439-896c-09dca3c83a5b"/>
+					<textElement textAlignment="Center">
+						<font size="10" isItalic="true" isUnderline="false"/>
+					</textElement>
+					<text><![CDATA[Laporan Absensi Karyawan]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="228" y="53" width="100" height="18" forecolor="#FFFFFF" uuid="4686a77d-27b8-42f5-abe7-f78069c300a5"/>
+					<textElement textAlignment="Center">
+						<font fontName="Poppins Light" size="10"/>
+					</textElement>
+					<text><![CDATA[Coffee & Eatery]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="207" y="0" width="139" height="68" forecolor="#CEC2B6" uuid="f50b26cf-a3e2-4220-8560-31ff76ea7723"/>
+					<textElement textAlignment="Center">
+						<font fontName="Poppins Black" size="42"/>
+					</textElement>
+					<text><![CDATA[Koba]]></text>
+				</staticText>
+				<line>
+					<reportElement positionType="FixRelativeToBottom" x="228" y="95" width="97" height="1" forecolor="#CEC2B6" uuid="a62d33b1-d341-46dc-ad96-bb70af8bd45a"/>
+					<graphicElement>
+						<pen lineWidth="0.5" lineColor="#999999"/>
+					</graphicElement>
+				</line>
+				<image>
+					<reportElement x="0" y="2" width="555" height="146" uuid="b9f247c6-3ce8-4521-9f98-fed655b5ebae"/>
+					<imageExpression><![CDATA["C:\\Users\\CIAGamester\\Documents\\KULI AH\\PNG\\Asset 11.png"]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement x="192" y="69" width="172" height="23" forecolor="#FFFFFF" uuid="152d4714-6f35-4e13-953f-b6f14c9510ca"/>
+					<textElement textAlignment="Center">
+						<font fontName="SansSerif" size="6"/>
+					</textElement>
+					<text><![CDATA[Jl. K.H.M. Usman No.191, Kukusan, Kecamatan Beji, 
+Kota Depok, Jawa Barat 16425]]></text>
+				</staticText>
+			</frame>
 		</band>
 	</title>
 	<pageHeader>
@@ -95,7 +119,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="24" splitType="Stretch">
+		<band height="18" splitType="Stretch">
 			<frame>
 				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="15" uuid="e860cfce-7969-4a40-90e6-14144bbb9aa5"/>
 				<textField isStretchWithOverflow="true">
@@ -129,7 +153,7 @@
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement style="Column header" x="381" y="94" width="138" height="15" forecolor="#736343" uuid="dc93e0a7-74d1-431c-98e7-bf1cd6cb3b1d"/>
+				<reportElement style="Column header" x="377" y="94" width="138" height="15" forecolor="#736343" uuid="dc93e0a7-74d1-431c-98e7-bf1cd6cb3b1d"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Adyas Amarullah]]></text>
 			</staticText>
@@ -150,7 +174,7 @@
 	<pageFooter>
 		<band height="25" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="-21" y="1" width="597" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="bfc2bc9b-64ad-4822-b73d-47d316b570f8"/>
+				<reportElement mode="Opaque" x="-21" y="1" width="597" height="24" forecolor="#D0B48E" backcolor="#CEC2B6" uuid="bfc2bc9b-64ad-4822-b73d-47d316b570f8"/>
 				<textField evaluationTime="Report">
 					<reportElement style="Column header" x="81" y="1" width="40" height="20" forecolor="#736343" uuid="f51e522c-c5a1-41b9-a2d9-4058c5feeda9"/>
 					<textElement verticalAlignment="Middle">

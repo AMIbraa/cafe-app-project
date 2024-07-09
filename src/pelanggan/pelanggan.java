@@ -13,18 +13,12 @@ import inventaris.inventaris;
 import karyawan.absenKaryawan;
 import login.logout;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Image;
 import java.sql.*;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -41,6 +35,7 @@ public class pelanggan extends javax.swing.JFrame {
     public pelanggan() {
         initComponents();
         dataPelanggan();
+        autoNumberMember();
     }
 
     protected void aktif(){
@@ -77,6 +72,26 @@ public class pelanggan extends javax.swing.JFrame {
         }
     }
     
+    private void autoNumberMember(){
+        String noMenus = "Member000";
+        int i = 0;
+        try{
+            String sql = "SELECT id_pelanggan FROM pelanggan";
+            PreparedStatement stat = conn.prepareStatement(sql);
+            ResultSet rs = stat.executeQuery();
+            while(rs.next()){
+                noMenus = rs.getString("id_pelanggan");
+            }
+            noMenus = noMenus.substring(6);
+            i = Integer.parseInt(noMenus) + 1;
+            noMenus = "00" + i;
+            noMenus = "Member" + noMenus.substring(noMenus.length()-3);
+            idpel.setText(noMenus);
+        } catch(SQLException e) {
+            JOptionPane.showMessageDialog(null, "Penomoran otomatis gagal! " + e);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -105,7 +120,6 @@ public class pelanggan extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelpelanggan = new jtable_custom.JTable_Custom();
         searchlabel = new javax.swing.JTextField();
-        caribtn = new javax.swing.JButton();
         nama12 = new javax.swing.JLabel();
         idpel = new javax.swing.JTextField();
         nama7 = new javax.swing.JLabel();
@@ -116,6 +130,7 @@ public class pelanggan extends javax.swing.JFrame {
         inputbtn = new javax.swing.JButton();
         hapusbtn = new javax.swing.JButton();
         editbtn = new javax.swing.JButton();
+        editbtn1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -300,6 +315,11 @@ public class pelanggan extends javax.swing.JFrame {
                 "ID Pelanggan", "Nama Pelanggan", "Social Media"
             }
         ));
+        tabelpelanggan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelpelangganMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelpelanggan);
 
         panelRound1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 710, 520));
@@ -320,22 +340,16 @@ public class pelanggan extends javax.swing.JFrame {
                 searchlabelActionPerformed(evt);
             }
         });
-        panelRound1.add(searchlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 360, -1));
-
-        caribtn.setBackground(new java.awt.Color(219, 167, 57));
-        caribtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
-        caribtn.setForeground(new java.awt.Color(255, 255, 255));
-        caribtn.setText("Cari");
-        caribtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                caribtnActionPerformed(evt);
+        searchlabel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchlabelKeyReleased(evt);
             }
         });
-        panelRound1.add(caribtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 100, -1, -1));
+        panelRound1.add(searchlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 360, -1));
 
         nama12.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         nama12.setForeground(new java.awt.Color(255, 255, 255));
-        nama12.setText("Data Pelanggan");
+        nama12.setText("Cari Data Pelanggan");
         panelRound1.add(nama12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
 
         idpel.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
@@ -387,7 +401,7 @@ public class pelanggan extends javax.swing.JFrame {
                 inputbtnActionPerformed(evt);
             }
         });
-        panelRound1.add(inputbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 500, 330, 40));
+        panelRound1.add(inputbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 560, 330, 40));
 
         hapusbtn.setBackground(new java.awt.Color(111, 72, 41));
         hapusbtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
@@ -404,6 +418,7 @@ public class pelanggan extends javax.swing.JFrame {
         editbtn.setBackground(new java.awt.Color(111, 72, 41));
         editbtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         editbtn.setForeground(new java.awt.Color(255, 255, 255));
+        editbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Edit_optimized.png"))); // NOI18N
         editbtn.setText("Ubah");
         editbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -411,6 +426,18 @@ public class pelanggan extends javax.swing.JFrame {
             }
         });
         panelRound1.add(editbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 440, 330, 40));
+
+        editbtn1.setBackground(new java.awt.Color(111, 72, 41));
+        editbtn1.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        editbtn1.setForeground(new java.awt.Color(255, 255, 255));
+        editbtn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Refresh_optimized.png"))); // NOI18N
+        editbtn1.setText("Muat Ulang");
+        editbtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editbtn1ActionPerformed(evt);
+            }
+        });
+        panelRound1.add(editbtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 500, 330, 40));
 
         jPanel25.add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, 720));
 
@@ -584,27 +611,6 @@ public class pelanggan extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_searchlabelActionPerformed
 
-    private void caribtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caribtnActionPerformed
-        Object[] Baris = {"ID Pelanggan", "Nama Pelanggan", "Social Media"};
-        tabmode = new DefaultTableModel(null, Baris);
-        tabelpelanggan.setModel(tabmode);
-        String sql = "SELECT * FROM pelanggan WHERE id_pelanggan OR nama_pelanggan like '%" + searchlabel.getText() + "%'";
-        try {
-            java.sql.Statement stat = conn.createStatement();
-            ResultSet rs = stat.executeQuery(sql);
-            while(rs.next()){
-                String a = rs.getString("id_pelanggan");
-                String b = rs.getString("nama_pelanggan");
-                String c = rs.getString("sosmed");
-
-                String[] data = {a,b,c};
-                tabmode.addRow(data);
-            }
-        } catch(Exception e) {
-            System.err.println("DB Error!" + e.getMessage());
-        }
-    }//GEN-LAST:event_caribtnActionPerformed
-
     private void idpelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idpelActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_idpelActionPerformed
@@ -630,6 +636,7 @@ public class pelanggan extends javax.swing.JFrame {
             kosong();
             idpel.requestFocus();
             dataPelanggan();
+            autoNumberMember();
         } catch(SQLException e) {
             JOptionPane.showMessageDialog(null, "Data gagal diinput! " + e);
         }
@@ -638,7 +645,7 @@ public class pelanggan extends javax.swing.JFrame {
     private void hapusbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hapusbtnActionPerformed
         int ok = JOptionPane.showConfirmDialog(null, "delete", "Confirm Dialog", JOptionPane.YES_NO_CANCEL_OPTION);
         if (ok == 0){
-            String sql = "delete from tambahmenu where kode_menu ='"+idpel.getText()+"'";
+            String sql = "delete from pelanggan where id_pelanggan ='"+idpel.getText()+"'";
             try {
                 PreparedStatement stat = conn.prepareStatement(sql);
                 stat.executeUpdate();
@@ -646,6 +653,7 @@ public class pelanggan extends javax.swing.JFrame {
                 kosong();
                 idpel.requestFocus();
                 dataPelanggan();
+                autoNumberMember();
             } catch(SQLException e) {
                 JOptionPane.showMessageDialog(null, "Data failed to delete "+ e);
             }
@@ -653,22 +661,46 @@ public class pelanggan extends javax.swing.JFrame {
     }//GEN-LAST:event_hapusbtnActionPerformed
 
     private void editbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editbtnActionPerformed
+        int bar = tabelpelanggan.getSelectedRow();
+        String idd = (tabelpelanggan.getModel().getValueAt(bar, 0).toString());        
         try {
-            String sql = "update tambahmenu set gambar=?,kategori=?,nama_menu=?,harga_pokok=?,harga_jual=?,stok=?,stokmin=? where kode_menu =?";
+            String sql = "update pelanggan set nama_pelanggan=?,sosmed=? where id_pelanggan ='"+ idd +"'";
             PreparedStatement stat = conn.prepareStatement(sql);
-            stat.setString(1, idpel.getText());
-            stat.setString(2, namapel.getText());
-            stat.setString(3, sosmed.getText());
+            stat.setString(1, namapel.getText());
+            stat.setString(2, sosmed.getText());
 
             stat.executeUpdate();
             JOptionPane.showMessageDialog(null, "Data berhasil diedit!");
             kosong();
             idpel.requestFocus();
             dataPelanggan();
+            autoNumberMember();
         } catch(SQLException e) {
             JOptionPane.showMessageDialog(null, "Data failed to edit!" + e);
         }
     }//GEN-LAST:event_editbtnActionPerformed
+
+    private void tabelpelangganMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelpelangganMouseClicked
+        int bar = tabelpelanggan.getSelectedRow();
+        String a = tabmode.getValueAt(bar, 0).toString();
+        String b = tabmode.getValueAt(bar, 1).toString();
+        String c = tabmode.getValueAt(bar, 2).toString();
+        idpel.setText(a);
+        namapel.setText(b);
+        sosmed.setText(c);
+    }//GEN-LAST:event_tabelpelangganMouseClicked
+
+    private void searchlabelKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchlabelKeyReleased
+        DefaultTableModel dt = (DefaultTableModel) tabelpelanggan.getModel();
+        TableRowSorter<DefaultTableModel> obj = new TableRowSorter<>(dt);
+        tabelpelanggan.setRowSorter(obj);
+        obj.setRowFilter(RowFilter.regexFilter(searchlabel.getText()));
+    }//GEN-LAST:event_searchlabelKeyReleased
+
+    private void editbtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editbtn1ActionPerformed
+        kosong();
+        autoNumberMember();
+    }//GEN-LAST:event_editbtn1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -706,8 +738,8 @@ public class pelanggan extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton caribtn;
     private javax.swing.JButton editbtn;
+    private javax.swing.JButton editbtn1;
     private javax.swing.JButton hapusbtn;
     private javax.swing.JLabel homebar;
     private javax.swing.JTextField idpel;

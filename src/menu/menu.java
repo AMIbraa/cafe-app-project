@@ -22,16 +22,22 @@ import java.awt.Image;
 import java.io.File;
 import java.sql.*;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import pelanggan.cariPelanggan;
 
@@ -166,6 +172,39 @@ public class menu extends javax.swing.JFrame {
         } catch(Exception e) {
             System.err.println("DB Error!" + e.getMessage());
         }
+    }
+    
+    private boolean stokAlert(String kodeMenu, int jumlahs){
+        boolean stokCukup = false;
+        PreparedStatement stat = null;
+        ResultSet rs = null;
+        
+        try{
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/cafe","root","");
+            String sql = "SELECT stok FROM tambahmenu WHERE kode_menu=?";
+            stat = conn.prepareStatement(sql);
+            stat.setString(1,kodeMenu);
+            rs = stat.executeQuery();
+            
+            if(rs.next()){
+                int stock = rs.getInt("stok");
+                
+                if(stock >= jumlahs){
+                    stokCukup = true;
+                }
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            try{
+                if(rs != null) rs.close();
+                if(stat != null) stat.close();
+                if(conn != null) conn.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return stokCukup;
     }
     
     public String namaPel;
@@ -363,7 +402,8 @@ public class menu extends javax.swing.JFrame {
         hapusbtn = new javax.swing.JButton();
         kode_menu = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        searchbtn = new javax.swing.JButton();
+        cariPelanggan1 = new javax.swing.JButton();
+        cariPelanggan2 = new javax.swing.JButton();
         panelRound4 = new PanelRound.PanelRound();
         panelRound5 = new PanelRound.PanelRound();
         jLabel3 = new javax.swing.JLabel();
@@ -781,13 +821,23 @@ public class menu extends javax.swing.JFrame {
 
         searchlabel.setFont(new java.awt.Font("Poppins", 0, 14)); // NOI18N
         searchlabel.setForeground(new java.awt.Color(204, 204, 204));
-        searchlabel.setText("Masukkan Data Menu");
+        searchlabel.setText("Cari Menu");
         searchlabel.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 searchlabelFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 searchlabelFocusLost(evt);
+            }
+        });
+        searchlabel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchlabelActionPerformed(evt);
+            }
+        });
+        searchlabel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchlabelKeyReleased(evt);
             }
         });
 
@@ -867,13 +917,23 @@ public class menu extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Poppins", 0, 12)); // NOI18N
         jLabel17.setText("Kode Menu");
 
-        searchbtn.setBackground(new java.awt.Color(219, 167, 57));
-        searchbtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
-        searchbtn.setForeground(new java.awt.Color(255, 255, 255));
-        searchbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Search_optimized.png"))); // NOI18N
-        searchbtn.addActionListener(new java.awt.event.ActionListener() {
+        cariPelanggan1.setBackground(new java.awt.Color(219, 167, 57));
+        cariPelanggan1.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        cariPelanggan1.setForeground(new java.awt.Color(255, 255, 255));
+        cariPelanggan1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Search_optimized.png"))); // NOI18N
+        cariPelanggan1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchbtnActionPerformed(evt);
+                cariPelanggan1ActionPerformed(evt);
+            }
+        });
+
+        cariPelanggan2.setBackground(new java.awt.Color(111, 72, 41));
+        cariPelanggan2.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
+        cariPelanggan2.setForeground(new java.awt.Color(255, 255, 255));
+        cariPelanggan2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Refresh_optimized.png"))); // NOI18N
+        cariPelanggan2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cariPelanggan2ActionPerformed(evt);
             }
         });
 
@@ -887,6 +947,7 @@ public class menu extends javax.swing.JFrame {
                     .addGroup(panelRound1Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 673, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound1Layout.createSequentialGroup()
                                     .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -899,19 +960,21 @@ public class menu extends javax.swing.JFrame {
                                     .addGap(18, 18, 18)
                                     .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel16)
-                                        .addComponent(qty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(qty, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(26, 26, 26))
                                 .addGroup(panelRound1Layout.createSequentialGroup()
                                     .addComponent(hapusbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
                                     .addComponent(tmbh, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(panelRound1Layout.createSequentialGroup()
                                 .addComponent(kat, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(25, 25, 25)
-                                .addComponent(searchlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(searchbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 673, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(27, 27, 27)
+                                .addComponent(searchlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cariPelanggan2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(24, 24, 24)
+                                .addComponent(cariPelanggan1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelRound1Layout.setVerticalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -923,11 +986,12 @@ public class menu extends javax.swing.JFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRound1Layout.createSequentialGroup()
                             .addComponent(jLabel7)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(nama_menu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(nama_menu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(qty, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(panelRound1Layout.createSequentialGroup()
                             .addComponent(jLabel16)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(qty, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(36, 36, 36)))
                     .addGroup(panelRound1Layout.createSequentialGroup()
                         .addComponent(jLabel17)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -936,15 +1000,17 @@ public class menu extends javax.swing.JFrame {
                 .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tmbh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(hapusbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
-                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(kat, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                        .addComponent(searchlabel, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
-                    .addComponent(searchbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(36, 36, 36)
+                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelRound1Layout.createSequentialGroup()
+                        .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
+                            .addComponent(kat, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(searchlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cariPelanggan1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cariPelanggan2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(202, Short.MAX_VALUE))
         );
 
         panelRound3.add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 733, -1));
@@ -1017,7 +1083,9 @@ public class menu extends javax.swing.JFrame {
         batalbtn.setBackground(new java.awt.Color(111, 72, 41));
         batalbtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         batalbtn.setForeground(new java.awt.Color(255, 255, 255));
+        batalbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Cancel_optimized.png"))); // NOI18N
         batalbtn.setText("Batalkan Transaksi");
+        batalbtn.setIconTextGap(6);
         batalbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 batalbtnActionPerformed(evt);
@@ -1096,7 +1164,9 @@ public class menu extends javax.swing.JFrame {
         bayarbtn.setBackground(new java.awt.Color(219, 167, 57));
         bayarbtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         bayarbtn.setForeground(new java.awt.Color(255, 255, 255));
+        bayarbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Get_Cash_1_optimized.png"))); // NOI18N
         bayarbtn.setText("Bayar");
+        bayarbtn.setIconTextGap(6);
         bayarbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bayarbtnActionPerformed(evt);
@@ -1120,7 +1190,9 @@ public class menu extends javax.swing.JFrame {
         cetakbtn.setBackground(new java.awt.Color(219, 167, 57));
         cetakbtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         cetakbtn.setForeground(new java.awt.Color(255, 255, 255));
+        cetakbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Print_optimized.png"))); // NOI18N
         cetakbtn.setText("Cetak");
+        cetakbtn.setIconTextGap(6);
         cetakbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cetakbtnActionPerformed(evt);
@@ -1131,6 +1203,7 @@ public class menu extends javax.swing.JFrame {
         selesaibtn.setBackground(new java.awt.Color(219, 167, 57));
         selesaibtn.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         selesaibtn.setForeground(new java.awt.Color(255, 255, 255));
+        selesaibtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon/Check_All_optimized.png"))); // NOI18N
         selesaibtn.setText("Selesai");
         selesaibtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1374,39 +1447,46 @@ public class menu extends javax.swing.JFrame {
         model = (DefaultTableModel) tabelmenu.getModel();
         tabpilih = (DefaultTableModel) tabelker.getModel();
         int rowIndex = tabelmenu.getSelectedRow();
+        
+//        String kodeMenu = kode_menu.getText();
+//        int jumlahs = Integer.parseInt(qty.getText());
+        
         try {
-//            if(isProductExist(nofak, namam)){
-//                    JOptionPane.showMessageDialog(this, "Menu ini sudah ada, silakan ubah jumlahnya saja", "Warning",2);
-//                } else {
-            String nofak = nofaktur.getText().trim();
-            String namap = np.getText().trim();
-            String namam = nama_menu.getText().trim();
-            String kodmen = kode_menu.getText().trim();
-            int jml = Integer.parseInt(qty.getText().trim());
+                String nofak = nofaktur.getText().trim();
+                String namap = np.getText().trim();
+                String namam = nama_menu.getText().trim();
+                String kodmen = kode_menu.getText().trim();
+                int jml = Integer.parseInt(qty.getText().trim());
 
-            double harga = Double.parseDouble(model.getValueAt(rowIndex, 4).toString());
-            double totalPerItem = harga * jml;  
+                double harga = Double.parseDouble(model.getValueAt(rowIndex, 4).toString());
+                double totalPerItem = harga * jml;  
 
-            if("".equals(nama_menu.getText())){
-                JOptionPane.showMessageDialog(this, "Anda belum memasukkan menu apapun", "Warning",2);
-            } else if("".equals(qty.getText())){
-                JOptionPane.showMessageDialog(this, "Masukkan jumlah menu", "Warning",2);
-            } else {
-                String sql = "insert into keranjang values (?,?,?,?,?,?)";
-                PreparedStatement stat = conn.prepareStatement(sql);
-                stat.setString(1, nofak);
-                stat.setString(2, namap);
-                stat.setString(3, kodmen);
-                stat.setString(4, namam);
-                stat.setInt(5, jml);
-                stat.setDouble(6, totalPerItem);
-                stat.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Menu berhasil ditambahkan!");
-                kosongMenu();
-                nofaktur.requestFocus();
-                tabelkeranjang();
-                totalBayar();
-            }
+                if("".equals(nama_menu.getText())){
+                    JOptionPane.showMessageDialog(this, "Anda belum memasukkan menu apapun", "Warning",2);
+                } else if("".equals(qty.getText())){
+                    JOptionPane.showMessageDialog(this, "Masukkan jumlah menu", "Warning",2);
+                } else {
+                    String sql = "insert into keranjang values (?,?,?,?,?,?)";
+                    PreparedStatement stat = conn.prepareStatement(sql);
+                    stat.setString(1, nofak);
+                    stat.setString(2, namap);
+                    stat.setString(3, kodmen);
+                    stat.setString(4, namam);
+                    stat.setInt(5, jml);
+                    stat.setDouble(6, totalPerItem);
+                    stat.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Menu berhasil ditambahkan!");
+                    kosongMenu();
+                    nofaktur.requestFocus();
+                    tabelkeranjang();
+                    totalBayar();
+                }
+//            if(stokAlert(kodeMenu, jumlahs)){
+//               
+//                }
+//            } else {
+//                JOptionPane.showMessageDialog(this, "Menu ini sudah ada, silakan ubah jumlahnya saja", "Warning",2);
+//            }
         } catch(SQLException e) {
             JOptionPane.showMessageDialog(this, "" + e, "Warning",2);
         }
@@ -1432,7 +1512,7 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_hapusbtnActionPerformed
 
     private void searchlabelFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchlabelFocusGained
-         if(searchlabel.getText().equals("Masukkan Data Menu")){
+         if(searchlabel.getText().equals("Cari Menu")){
             searchlabel.setText("");
             searchlabel.setForeground(new Color(0,0,0));
         }
@@ -1440,7 +1520,7 @@ public class menu extends javax.swing.JFrame {
 
     private void searchlabelFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchlabelFocusLost
           if(searchlabel.getText().equals("")){
-            searchlabel.setText("Masukkan Data Menu");
+            searchlabel.setText("Cari Menu");
             searchlabel.setForeground(new Color(204,204,204));
         }
     }//GEN-LAST:event_searchlabelFocusLost
@@ -1473,7 +1553,8 @@ public class menu extends javax.swing.JFrame {
     private void batalbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_batalbtnActionPerformed
         int ok = JOptionPane.showConfirmDialog(null, "batalkan transaksi?", "Confirm Dialog", JOptionPane.YES_NO_CANCEL_OPTION);
         if (ok == 0){
-            String sql = "delete from keranjang where no_faktur='"+no_faktur1.getText()+"'";
+            String sql = "delete from `keranjang`, `penjualan` USING `keranjang`, `penjualan` "
+                    + "WHERE keranjang.no_faktur = penjualan.no_faktur and penjualan.no_faktur='"+no_faktur1.getText()+"'";
             try {
                 PreparedStatement stat = conn.prepareStatement(sql);
                 stat.executeUpdate();
@@ -1562,18 +1643,21 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_cariPelangganActionPerformed
 
     private void cetakbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cetakbtnActionPerformed
+        Locale locale = new Locale("id", "ID");
+        Locale.setDefault(locale);
         try {
-            String reportPath = "src/menu/FakturPenjualan.jasper";
-            Connection conc = new newConnection().connect();
-            HashMap parameter = new HashMap();
-            File reportFile = new File(reportPath);
-            JasperReport jr = (JasperReport) JRLoader.loadObject(reportFile);
-            JasperPrint print = JasperFillManager.fillReport(jr,parameter,conc);
-            JasperViewer.viewReport(print,false);
-            JasperViewer.setDefaultLookAndFeelDecorated(true);
-//            viewer.setVisible(true);
-        } catch(Exception e) {
-            JOptionPane.showMessageDialog(this, "Error displaying report" + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/cafe","root","");
+            File file = new File("src/menu/FakturPenjualan.jrxml");
+
+            Map<String, Object> param = new HashMap<>();
+            param.put("kode", nofaktur.getText());
+            
+            JasperDesign JasperDesign = JRXmlLoader.load(file);
+            JasperReport JasperReport = JasperCompileManager.compileReport(JasperDesign);
+            JasperPrint JasperPrint = JasperFillManager.fillReport(JasperReport, param, conn);
+            JasperViewer.viewReport(JasperPrint, false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_cetakbtnActionPerformed
 
@@ -1594,7 +1678,18 @@ public class menu extends javax.swing.JFrame {
                 }
     }//GEN-LAST:event_katActionPerformed
 
-    private void searchbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchbtnActionPerformed
+    private void searchlabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchlabelActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchlabelActionPerformed
+
+    private void searchlabelKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchlabelKeyReleased
+//        DefaultTableModel dt = (DefaultTableModel) tabelmenu.getModel();
+//        TableRowSorter<DefaultTableModel> obj = new TableRowSorter<>(dt);
+//        tabelmenu.setRowSorter(obj);
+//        obj.setRowFilter(RowFilter.regexFilter(searchlabel.getText()));
+    }//GEN-LAST:event_searchlabelKeyReleased
+
+    private void cariPelanggan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cariPelanggan1ActionPerformed
         Object[] Baris = {"Gambar", "Kode Menu", "Kategori", "Nama Menu", "Harga"};
         tabmode = new DefaultTableModel(null, Baris);
         tabelmenu.setModel(tabmode);
@@ -1612,11 +1707,17 @@ public class menu extends javax.swing.JFrame {
                 
                 Object[] data = {im,a,c,d,e};
                 tabmode.addRow(data);
+                setTableRenderer();
             }
         } catch(Exception e) {
             System.err.println("DB Error!" + e.getMessage());
         }
-    }//GEN-LAST:event_searchbtnActionPerformed
+    }//GEN-LAST:event_cariPelanggan1ActionPerformed
+
+    private void cariPelanggan2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cariPelanggan2ActionPerformed
+        datatable();
+        setTableRenderer();
+    }//GEN-LAST:event_cariPelanggan2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1659,6 +1760,8 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JButton bayarbtn;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton cariPelanggan;
+    private javax.swing.JButton cariPelanggan1;
+    private javax.swing.JButton cariPelanggan2;
     private javax.swing.JButton cetakbtn;
     private com.raven.datechooser.DateChooser dateChooser;
     private javax.swing.JButton datebtn;
@@ -1724,7 +1827,6 @@ public class menu extends javax.swing.JFrame {
     private PanelRound.PanelRound panelRound6;
     private PanelRound.PanelRound panelRound7;
     private javax.swing.JTextField qty;
-    private javax.swing.JButton searchbtn;
     private javax.swing.JTextField searchlabel;
     private javax.swing.JButton selesaibtn;
     private PanelRound.PanelRound simpanbtn;

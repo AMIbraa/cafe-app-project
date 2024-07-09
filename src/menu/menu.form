@@ -844,8 +844,9 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="panelRound2" min="-2" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="30" pref="30" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="jScrollPane1" min="-2" pref="673" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Group type="102" alignment="1" attributes="0">
                                                       <Group type="103" groupAlignment="0" attributes="0">
@@ -860,8 +861,9 @@
                                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                                       <Group type="103" groupAlignment="0" attributes="0">
                                                           <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="qty" min="-2" max="-2" attributes="0"/>
+                                                          <Component id="qty" min="-2" pref="87" max="-2" attributes="0"/>
                                                       </Group>
+                                                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                                                   </Group>
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <Component id="hapusbtn" min="-2" pref="130" max="-2" attributes="0"/>
@@ -869,18 +871,19 @@
                                                       <Component id="tmbh" min="-2" pref="242" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
-                                              <Group type="102" alignment="0" attributes="0">
+                                              <Group type="102" attributes="0">
                                                   <Component id="kat" min="-2" pref="240" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                                                  <Component id="searchlabel" min="-2" pref="334" max="-2" attributes="0"/>
-                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                  <Component id="searchbtn" max="32767" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                                                  <Component id="searchlabel" min="-2" pref="280" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="cariPelanggan2" min="-2" pref="44" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                                                  <Component id="cariPelanggan1" min="-2" pref="52" max="-2" attributes="0"/>
                                               </Group>
-                                              <Component id="jScrollPane1" alignment="0" min="-2" pref="673" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -894,12 +897,14 @@
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="nama_menu" min="-2" pref="30" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="3" attributes="0">
+                                                  <Component id="nama_menu" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                                  <Component id="qty" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                              </Group>
                                           </Group>
                                           <Group type="102" alignment="1" attributes="0">
                                               <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="qty" min="-2" pref="30" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Group type="102" attributes="0">
@@ -913,17 +918,20 @@
                                       <Component id="tmbh" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                       <Component id="hapusbtn" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="kat" alignment="3" pref="40" max="32767" attributes="0"/>
-                                          <Component id="searchlabel" alignment="3" pref="40" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="3" max="-2" attributes="0">
+                                              <Component id="kat" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                                              <Component id="searchlabel" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                                              <Component id="cariPelanggan1" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="searchbtn" max="32767" attributes="0"/>
+                                      <Component id="cariPelanggan2" min="-2" pref="36" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace pref="202" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -1002,11 +1010,13 @@
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="cc" green="cc" red="cc" type="rgb"/>
                             </Property>
-                            <Property name="text" type="java.lang.String" value="Masukkan Data Menu"/>
+                            <Property name="text" type="java.lang.String" value="Cari Menu"/>
                           </Properties>
                           <Events>
                             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="searchlabelFocusGained"/>
                             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="searchlabelFocusLost"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchlabelActionPerformed"/>
+                            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="searchlabelKeyReleased"/>
                           </Events>
                         </Component>
                         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -1160,7 +1170,7 @@
                             <Property name="text" type="java.lang.String" value="Kode Menu"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JButton" name="searchbtn">
+                        <Component class="javax.swing.JButton" name="cariPelanggan1">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="39" green="a7" red="db" type="rgb"/>
@@ -1176,7 +1186,26 @@
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchbtnActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cariPelanggan1ActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="javax.swing.JButton" name="cariPelanggan2">
+                          <Properties>
+                            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="29" green="48" red="6f" type="rgb"/>
+                            </Property>
+                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                              <Font name="Poppins" size="14" style="1"/>
+                            </Property>
+                            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                            </Property>
+                            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                              <Image iconType="3" name="/img/icon/Refresh_optimized.png"/>
+                            </Property>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cariPelanggan2ActionPerformed"/>
                           </Events>
                         </Component>
                       </SubComponents>
@@ -1333,7 +1362,11 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
+                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                          <Image iconType="3" name="/img/icon/Cancel_optimized.png"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="Batalkan Transaksi"/>
+                        <Property name="iconTextGap" type="int" value="6"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="batalbtnActionPerformed"/>
@@ -1520,7 +1553,11 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
+                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                          <Image iconType="3" name="/img/icon/Get_Cash_1_optimized.png"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="Bayar"/>
+                        <Property name="iconTextGap" type="int" value="6"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bayarbtnActionPerformed"/>
@@ -1573,7 +1610,11 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
+                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                          <Image iconType="3" name="/img/icon/Print_optimized.png"/>
+                        </Property>
                         <Property name="text" type="java.lang.String" value="Cetak"/>
+                        <Property name="iconTextGap" type="int" value="6"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cetakbtnActionPerformed"/>
@@ -1594,6 +1635,9 @@
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                          <Image iconType="3" name="/img/icon/Check_All_optimized.png"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Selesai"/>
                       </Properties>
